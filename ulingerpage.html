@@ -1,0 +1,1748 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karl Ulinger | Kunst Galerie</title>
+    <style>
+        /* Farbschema: Grün und Gelb */
+        :root {
+            --primary-color: #8bc34a; /* Grün */
+            --secondary-color: #ffeb3b; /* Gelb */
+            --primary-dark: #689f38;
+            --secondary-dark: #fdd835;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #7cb342;
+            --secondary-color: #fdd835;
+            --primary-dark: #558b2f;
+            --secondary-dark: #f9a825;
+            --bg-color: #121212;
+            --text-color: #f5f5f5;
+            --light-bg: #1e1e1e;
+            --card-bg: #242424;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: var(--transition);
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .theme-toggle {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 50vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizNtVqQKeOv6zRuxVfmSHefFVvoK6NBtI_t9bmICJh6WSr2l5ZKv72Yq-Fi2cTDErtfUWIQuoVBAOZg6K4lrH8UHQp7CX-IkdZ1bOpo5mdndv0TBaEdofou6IlqfR6Na9oEGetDkNfNJrZ/s1600/Karlson2030.jpg");
+            background-size: cover;
+            background-position: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: var(--border-radius);
+            transition: var(--transition);
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--secondary-dark);
+        }
+
+        /* Gallery Section */
+        .gallery-section {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            position: relative;
+            font-size: 2.5rem;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .filters {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1.5rem;
+            background-color: var(--light-bg);
+            border: none;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .filter-btn.active, .filter-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .search-bar {
+            max-width: 500px;
+            margin: 0 auto 2rem;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 0.8rem 1rem 0.8rem 3rem;
+            border: 2px solid var(--light-bg);
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+        }
+
+        .search-bar input:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .search-bar i {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #888;
+        }
+
+        .view-options {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .view-btn {
+            background-color: var(--light-bg);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .view-btn.active, .view-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .gallery-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+
+        .artwork-card {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            position: relative;
+        }
+
+        .artwork-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .artwork-image-container {
+            position: relative;
+            overflow: hidden;
+            height: 250px;
+        }
+
+        .gallery-grid.list-view .artwork-card {
+            display: flex;
+            height: 250px;
+        }
+
+        .gallery-grid.list-view .artwork-image-container {
+            width: 250px;
+            min-width: 250px;
+        }
+
+        .artwork-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+
+        .artwork-card:hover .artwork-image {
+            transform: scale(1.05);
+        }
+
+        .artwork-info {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .artwork-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+
+        .artwork-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .artwork-description {
+            margin-top: 0.5rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            flex-grow: 1;
+        }
+
+        .gallery-grid.list-view .artwork-description {
+            -webkit-line-clamp: 4;
+        }
+
+        .artwork-link {
+            margin-top: 1rem;
+            align-self: flex-start;
+        }
+
+        .original-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            font-size: 0.9rem;
+        }
+
+        .original-link:hover {
+            color: var(--primary-dark);
+        }
+
+        .artwork-overlay {
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .overlay-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(5px);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: var(--transition);
+            opacity: 0;
+        }
+
+        .artwork-card:hover .overlay-btn {
+            opacity: 1;
+        }
+
+        .overlay-btn:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .artwork-badge {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+            backdrop-filter: blur(5px);
+        }
+
+        .modal.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--card-bg);
+            border-radius: var(--border-radius);
+            max-width: 1000px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+            transform: translateY(-50px);
+            transition: var(--transition);
+        }
+
+        .modal.open .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            z-index: 10;
+            transition: var(--transition);
+        }
+
+        .modal-close:hover {
+            color: var(--primary-color);
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .modal-image-container {
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
+            border-radius: var(--border-radius);
+            position: relative;
+            background-color: var(--light-bg);
+        }
+
+        .modal-image {
+            max-width: 100%;
+            max-height: 60vh;
+            object-fit: contain;
+        }
+
+        .modal-info {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+
+        .modal-main h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .modal-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+        }
+
+        .modal-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+        }
+
+        .modal-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .modal-sidebar {
+            padding: 1.5rem;
+            background-color: var(--light-bg);
+            border-radius: var(--border-radius);
+        }
+
+        .sidebar-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+
+        .sidebar-title::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            margin-top: 0.5rem;
+        }
+
+        .info-item {
+            display: flex;
+            margin-bottom: 1rem;
+        }
+
+        .info-label {
+            min-width: 100px;
+            font-weight: 500;
+        }
+
+        .image-attribution {
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            z-index: 90;
+        }
+
+        .admin-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .admin-button:hover {
+            background-color: var(--primary-dark);
+            transform: rotate(45deg);
+        }
+
+        .admin-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 2px solid var(--light-bg);
+            border-radius: var(--border-radius);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            border-color: var(--primary-color);
+            outline: none;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        .image-preview-container {
+            width: 100%;
+            height: 200px;
+            border: 2px dashed var(--light-bg);
+            border-radius: var(--border-radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 0.5rem;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .image-preview-text {
+            text-align: center;
+            color: #888;
+        }
+
+        .image-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            display: none;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--light-bg);
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-widget h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .footer-widget h3::after {
+            content: '';
+            display: block;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            margin-top: 0.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+            padding-left: 5px;
+        }
+
+        .footer-contact p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .footer-contact i {
+            min-width: 20px;
+        }
+
+        .footer-social {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .footer-social a {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .footer-social a:hover {
+            background-color: var(--primary-color);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            padding-top: 2rem;
+            text-align: center;
+            border-top: 1px solid rgba(0, 0, 0, 0.1);
+            color: #888;
+            font-size: 0.9rem;
+        }
+
+        /* Loader */
+        .loader-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: var(--bg-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .loader-container.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .loader {
+            display: inline-block;
+            width: 80px;
+            height: 80px;
+            position: relative;
+        }
+
+        .loader div {
+            position: absolute;
+            top: 33px;
+            width: 13px;
+            height: 13px;
+            border-radius: 50%;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+
+        .loader div:nth-child(1) {
+            left: 8px;
+            animation: loader1 0.6s infinite;
+        }
+
+        .loader div:nth-child(2) {
+            left: 8px;
+            animation: loader2 0.6s infinite;
+        }
+
+        .loader div:nth-child(3) {
+            left: 32px;
+            animation: loader2 0.6s infinite;
+        }
+
+        .loader div:nth-child(4) {
+            left: 56px;
+            animation: loader3 0.6s infinite;
+        }
+
+        @keyframes loader1 {
+            0% {
+                transform: scale(0);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes loader3 {
+            0% {
+                transform: scale(1);
+            }
+            100% {
+                transform: scale(0);
+            }
+        }
+
+        @keyframes loader2 {
+            0% {
+                transform: translate(0, 0);
+            }
+            100% {
+                transform: translate(24px, 0);
+            }
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            padding: 1rem 2rem;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .toast.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .toast.success {
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .toast.error {
+            border-left: 4px solid #f44336;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .modal-info {
+                grid-template-columns: 1fr;
+            }
+
+            .admin-form {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 70px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 70px);
+                background-color: var(--bg-color);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 2rem;
+                transition: var(--transition);
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .gallery-grid.list-view .artwork-card {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .gallery-grid.list-view .artwork-image-container {
+                width: 100%;
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .filters {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .filters .filter-btn {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .modal-body {
+                padding: 1.5rem;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader-container" id="loader">
+        <div class="loader"><div></div><div></div><div></div><div></div></div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#" class="logo">
+                    <svg viewBox="0 0 512 512" fill="currentColor">
+                        <path d="M458.622 255.92l45.985-45.005c13.708-12.977 7.316-36.039-10.664-40.339l-62.65-15.99 17.661-62.015c4.991-17.838-11.829-34.663-29.661-29.671l-61.994 17.667-15.984-62.671C337.085.197 313.765-6.276 300.99 7.228L256 53.57 211.011 7.229c-12.63-13.351-36.047-7.234-40.325 10.668l-15.984 62.671-61.995-17.667C74.87 57.907 58.056 74.738 63.046 92.572l17.661 62.015-62.65 15.99C.069 174.878-6.31 197.944 7.392 210.915l45.985 45.005-45.985 45.004c-13.708 12.977-7.316 36.039 10.664 40.339l62.65 15.99-17.661 62.015c-4.991 17.838 11.829 34.663 29.661 29.671l61.994-17.667 15.984 62.671c4.439 18.575 27.696 24.018 40.325 10.668L256 458.61l44.989 46.001c12.5 13.488 35.987 7.486 40.325-10.668l15.984-62.671 61.994 17.667c17.836 4.994 34.651-11.837 29.661-29.671l-17.661-62.015 62.65-15.99c17.987-4.302 24.366-27.367 10.664-40.339l-45.984-45.004z"/>
+                    </svg>
+                    Karl Ulinger
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" class="active">Start</a></li>
+                    <li><a href="#gallery">Galerie</a></li>
+                    <li><a href="#about">Über</a></li>
+                    <li><a href="#contact">Kontakt</a></li>
+                </ul>
+                <div>
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Karl Ulinger Kunstgalerie</h1>
+            <p>Entdecken Sie die faszinierende Welt abstrakter und expressiver Kunst. Eine einzigartige Sammlung von Gemälden, die Emotionen wecken und zum Nachdenken anregen.</p>
+            <a href="#gallery" class="btn">Galerie entdecken</a>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="gallery-section" id="gallery">
+        <div class="container">
+            <h2 class="section-title">Kunstwerke</h2>
+
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Suche nach Titeln, Kategorien oder Beschreibungen...">
+            </div>
+
+            <div class="filters" id="filters">
+                <button class="filter-btn active" data-filter="all">Alle Werke</button>
+                <button class="filter-btn" data-filter="gemälde">Gemälde</button>
+                <button class="filter-btn" data-filter="zeichnung">Zeichnungen</button>
+                <button class="filter-btn" data-filter="digital">Digital</button>
+                <button class="filter-btn" data-filter="skulptur">Skulpturen</button>
+            </div>
+
+            <div class="view-options">
+                <button class="view-btn active" id="gridViewBtn" title="Rasteransicht">
+                    <i class="fas fa-th"></i>
+                </button>
+                <button class="view-btn" id="listViewBtn" title="Listenansicht">
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
+
+            <div class="gallery-grid" id="galleryGrid">
+                <!-- Gallery items will be loaded dynamically via JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="gallery-section" id="about">
+        <div class="container">
+            <h2 class="section-title">Über den Künstler</h2>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: center;">
+                <div style="flex: 1; min-width: 300px;">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjCxSSKO-V-58VKVlz4Kd6HVTvzMiPZQM_y7ojsj2khPG2PcPTxnA2O_qmfhQgNNqOb-4RsqwChHp_8QKSGByF0VW8YZjCJUkRdc_bXR284Hgzwh6cbr4c6Ie26uMKPyPlWlr8koirhwBc/s1600/IMG_20181029_143317_487.jpg" alt="Karl Ulinger" style="width: 100%; border-radius: var(--border-radius); box-shadow: var(--shadow);">
+                </div>
+                <div style="flex: 2; min-width: 300px;">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Karl Ulinger</h3>
+                    <p style="margin-bottom: 1rem; line-height: 1.8;">Karl Ulinger ist ein zeitgenössischer Künstler, der für seine expressiven und farbintensiven Werke bekannt ist. Sein unverwechselbarer Stil verbindet abstrakte Elemente mit emotionaler Tiefe und lädt den Betrachter ein, seine eigene Interpretation zu finden.</p>
+                    <p style="margin-bottom: 1rem; line-height: 1.8;">Seine Kunstwerke umfassen verschiedene Medien, wobei der Schwerpunkt auf Malerei und digitaler Kunst liegt. Die lebendigen Farben und dynamischen Kompositionen sind charakteristisch für seinen künstlerischen Ausdruck.</p>
+                    <p style="line-height: 1.8;">Karl Ulinger schöpft Inspiration aus der Natur, dem urbanen Leben und philosophischen Konzepten. Seine Werke wurden in zahlreichen Ausstellungen präsentiert und sind Teil privater Sammlungen.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="gallery-section" id="contact">
+        <div class="container">
+            <h2 class="section-title">Kontakt</h2>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <h3 style="margin-bottom: 1rem; color: var(--primary-color);">Interesse an einem Kunstwerk?</h3>
+                    <p style="margin-bottom: 1.5rem; line-height: 1.8;">Wenn Sie Interesse an einem Kunstwerk haben oder weitere Informationen wünschen, können Sie gerne Kontakt aufnehmen. Füllen Sie einfach das Formular aus, und wir werden uns so bald wie möglich bei Ihnen melden.</p>
+                    <div style="margin-bottom: 1.5rem;">
+                        <p style="margin-bottom: 0.5rem;"><i class="fas fa-envelope" style="width: 20px;"></i> info@karlulinger.com</p>
+                        <p style="margin-bottom: 0.5rem;"><i class="fas fa-phone" style="width: 20px;"></i> +43 123 456 789</p>
+                        <p><i class="fas fa-map-marker-alt" style="width: 20px;"></i> Ateliergasse 42, 1010 Wien</p>
+                    </div>
+                </div>
+                <div style="flex: 1; min-width: 300px;">
+                    <form id="contactForm" style="background-color: var(--light-bg); padding: 2rem; border-radius: var(--border-radius);">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">E-Mail</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject">Betreff</label>
+                            <input type="text" id="subject" name="subject" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Nachricht</label>
+                            <textarea id="message" name="message" rows="5" required></textarea>
+                        </div>
+                        <button type="submit" class="btn" style="width: 100%;">Nachricht senden</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-widget">
+                    <h3>Karl Ulinger</h3>
+                    <p>Eine einzigartige Sammlung expressiver und moderner Kunst. Entdecken Sie die faszinierende Welt der abstrakten Werke von Karl Ulinger.</p>
+                    <div class="footer-social">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-pinterest"></i></a>
+                    </div>
+                </div>
+                <div class="footer-widget">
+                    <h3>Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Startseite</a></li>
+                        <li><a href="#gallery">Galerie</a></li>
+                        <li><a href="#about">Über den Künstler</a></li>
+                        <li><a href="#contact">Kontakt</a></li>
+                        <li><a href="#">Impressum</a></li>
+                        <li><a href="#">Datenschutz</a></li>
+                    </ul>
+                </div>
+                <div class="footer-widget">
+                    <h3>Kontakt</h3>
+                    <div class="footer-contact">
+                        <p><i class="fas fa-map-marker-alt"></i> Ateliergasse 42, 1010 Wien</p>
+                        <p><i class="fas fa-phone"></i> +43 123 456 789</p>
+                        <p><i class="fas fa-envelope"></i> info@karlulinger.com</p>
+                        <p><i class="fas fa-clock"></i> Mo-Fr: 10:00 - 18:00 Uhr</p>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Karl Ulinger. Alle Rechte vorbehalten.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Artwork Modal -->
+    <div class="modal" id="artworkModal">
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body" id="modalBody">
+                <!-- Modal content will be loaded dynamically -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <button class="modal-close" id="adminModalClose">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="modal-body">
+                <h2 style="margin-bottom: 2rem;">Neues Kunstwerk hinzufügen</h2>
+                <form id="adminForm" class="admin-form">
+                    <div class="form-group">
+                        <label for="artworkTitle">Titel</label>
+                        <input type="text" id="artworkTitle" name="title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artworkCategory">Kategorie</label>
+                        <select id="artworkCategory" name="category" required>
+                            <option value="gemälde">Gemälde</option>
+                            <option value="zeichnung">Zeichnung</option>
+                            <option value="digital">Digital</option>
+                            <option value="skulptur">Skulptur</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="artworkYear">Jahr</label>
+                        <input type="number" id="artworkYear" name="year" min="1900" max="2100" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="artworkDimensions">Abmessungen</label>
+                        <input type="text" id="artworkDimensions" name="dimensions" placeholder="z.B. 60 x 80 cm">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="artworkDescription">Beschreibung</label>
+                        <textarea id="artworkDescription" name="description" rows="4" required></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="artworkImage">Bild URL (von Blogspot)</label>
+                        <input type="url" id="artworkImage" name="image" required placeholder="https://blogger.googleusercontent.com/img/...">
+                        <div class="image-preview-container" id="imagePreviewContainer">
+                            <div class="image-preview-text">
+                                <i class="fas fa-image" style="font-size: 2rem; margin-bottom: 0.5rem;"></i>
+                                <p>Vorschau des Bildes</p>
+                            </div>
+                            <img src="" alt="Vorschau" id="imagePreview" class="image-preview">
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <button type="submit" class="btn">Kunstwerk hinzufügen</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Panel Button -->
+    <div class="admin-panel">
+        <div class="admin-button" id="adminButton">
+            <i class="fas fa-plus"></i>
+        </div>
+    </div>
+
+    <script>
+        // Main JavaScript for the gallery functionality
+
+        // DOM Elements
+        const galleryGrid = document.getElementById('galleryGrid');
+        const searchInput = document.getElementById('searchInput');
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const gridViewBtn = document.getElementById('gridViewBtn');
+        const listViewBtn = document.getElementById('listViewBtn');
+        const artworkModal = document.getElementById('artworkModal');
+        const modalBody = document.getElementById('modalBody');
+        const modalClose = document.getElementById('modalClose');
+        const adminButton = document.getElementById('adminButton');
+        const adminModal = document.getElementById('adminModal');
+        const adminModalClose = document.getElementById('adminModalClose');
+        const adminForm = document.getElementById('adminForm');
+        const artworkImage = document.getElementById('artworkImage');
+        const imagePreview = document.getElementById('imagePreview');
+        const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+        const loader = document.getElementById('loader');
+        const toast = document.getElementById('toast');
+        const themeToggle = document.getElementById('themeToggle');
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        const contactForm = document.getElementById('contactForm');
+
+        // Artwork Data (This would be fetched from the Blogspot site in a real implementation)
+        let artworks = []; // Will be populated from the blog data
+
+        // Helper Functions
+
+        // Show loader
+        function showLoader() {
+            loader.classList.add('show');
+        }
+
+        // Hide loader
+        function hideLoader() {
+            loader.classList.remove('show');
+        }
+
+        // Show toast message
+        function showToast(message, type = 'success') {
+            toast.textContent = message;
+            toast.className = 'toast show ' + type;
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Toggle theme
+        function toggleTheme() {
+            const html = document.documentElement;
+            const isDarkMode = html.getAttribute('data-theme') === 'dark';
+
+            html.setAttribute('data-theme', isDarkMode ? 'light' : 'dark');
+            themeToggle.innerHTML = isDarkMode ? '<i class="fas fa-moon"></i>' : '<i class="fas fa-sun"></i>';
+
+            localStorage.setItem('theme', isDarkMode ? 'light' : 'dark');
+        }
+
+        // Toggle mobile menu
+        function toggleMobileMenu() {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') ?
+                '<i class="fas fa-times"></i>' :
+                '<i class="fas fa-bars"></i>';
+        }
+
+        // Create a gallery item
+        function createGalleryItem(artwork) {
+            const article = document.createElement('article');
+            article.className = 'artwork-card';
+            article.dataset.category = artwork.category;
+            article.dataset.id = artwork.id;
+
+            // Create HTML structure
+            article.innerHTML = `
+                <div class="artwork-image-container">
+                    <img src="${artwork.image}" alt="${artwork.title}" class="artwork-image" loading="lazy">
+                    <div class="artwork-badge">${artwork.category.charAt(0).toUpperCase() + artwork.category.slice(1)}</div>
+                    <div class="artwork-overlay">
+                        <button class="overlay-btn view-details" title="Details anzeigen">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                        <a href="${artwork.image}" class="overlay-btn" title="Originalbild öffnen" target="_blank">
+                            <i class="fas fa-external-link-alt"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="artwork-info">
+                    <h3 class="artwork-title">${artwork.title}</h3>
+                    <div class="artwork-meta">
+                        <span>${artwork.year}</span>
+                        <span>•</span>
+                        <span>${artwork.dimensions || 'Variabel'}</span>
+                    </div>
+                    <p class="artwork-description">${artwork.description}</p>
+                    <div class="artwork-link">
+                        <a href="${artwork.originalUrl || '#'}" class="original-link" target="_blank">
+                            <i class="fas fa-link"></i> Zum Blogpost
+                        </a>
+                    </div>
+                </div>
+            `;
+
+            // Add event listener for view details button
+            article.querySelector('.view-details').addEventListener('click', () => {
+                openArtworkModal(artwork);
+            });
+
+            return article;
+        }
+
+        // Render gallery
+        function renderGallery(items = artworks) {
+            // Clear the gallery
+            galleryGrid.innerHTML = '';
+
+            if (items.length === 0) {
+                galleryGrid.innerHTML = '<p style="text-align: center; grid-column: 1/-1; padding: 2rem;">Keine Kunstwerke gefunden.</p>';
+                return;
+            }
+
+            // Create and append gallery items
+            items.forEach(artwork => {
+                const galleryItem = createGalleryItem(artwork);
+                galleryGrid.appendChild(galleryItem);
+            });
+        }
+
+        // Filter gallery items
+        function filterGallery(category) {
+            let filteredItems;
+
+            if (category === 'all') {
+                filteredItems = artworks;
+            } else {
+                filteredItems = artworks.filter(artwork => artwork.category === category);
+            }
+
+            renderGallery(filteredItems);
+        }
+
+        // Search gallery items
+        function searchGallery(query) {
+            if (!query.trim()) {
+                renderGallery();
+                return;
+            }
+
+            const searchTerm = query.toLowerCase();
+            const filteredItems = artworks.filter(artwork => {
+                return artwork.title.toLowerCase().includes(searchTerm) ||
+                       artwork.description.toLowerCase().includes(searchTerm) ||
+                       artwork.category.toLowerCase().includes(searchTerm);
+            });
+
+            renderGallery(filteredItems);
+        }
+
+        // Open artwork modal
+        function openArtworkModal(artwork) {
+            // Create modal content
+            modalBody.innerHTML = `
+                <div class="modal-image-container">
+                    <img src="${artwork.image}" alt="${artwork.title}" class="modal-image">
+                </div>
+                <div class="modal-info">
+                    <div class="modal-main">
+                        <h2>${artwork.title}</h2>
+                        <div class="modal-meta">
+                            <span>${artwork.category.charAt(0).toUpperCase() + artwork.category.slice(1)}</span>
+                            <span>|</span>
+                            <span>${artwork.year}</span>
+                            <span>|</span>
+                            <span>${artwork.dimensions || 'Variabel'}</span>
+                        </div>
+                        <div class="modal-description">
+                            ${artwork.description}
+                        </div>
+                        <div class="modal-actions">
+                            <a href="${artwork.image}" class="btn" target="_blank">
+                                <i class="fas fa-external-link-alt"></i> Originalbild öffnen
+                            </a>
+                            <a href="${artwork.originalUrl || '#'}" class="btn btn-secondary" target="_blank">
+                                <i class="fas fa-link"></i> Zum Blogpost
+                            </a>
+                        </div>
+                    </div>
+                    <div class="modal-sidebar">
+                        <h3 class="sidebar-title">Kunstwerk Details</h3>
+                        <div class="info-item">
+                            <span class="info-label">Künstler:</span>
+                            <span>Karl Ulinger</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Medium:</span>
+                            <span>${artwork.category === 'gemälde' ? 'Öl auf Leinwand' :
+                                   artwork.category === 'zeichnung' ? 'Mischtechnik' :
+                                   artwork.category === 'digital' ? 'Digitale Kunst' :
+                                   artwork.category === 'skulptur' ? 'Skulptur' : 'Variabel'}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Jahr:</span>
+                            <span>${artwork.year}</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Abmessungen:</span>
+                            <span>${artwork.dimensions || 'Variabel'}</span>
+                        </div>
+                        <div class="image-attribution">
+                            <p>Bild von der <a href="${artwork.originalUrl || '#'}" target="_blank">Karl Ulinger Blogspot-Seite</a></p>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Show the modal
+            artworkModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close artwork modal
+        function closeArtworkModal() {
+            artworkModal.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
+        // Toggle gallery view
+        function toggleGalleryView(viewType) {
+            if (viewType === 'grid') {
+                galleryGrid.classList.remove('list-view');
+                gridViewBtn.classList.add('active');
+                listViewBtn.classList.remove('active');
+                localStorage.setItem('galleryView', 'grid');
+            } else {
+                galleryGrid.classList.add('list-view');
+                gridViewBtn.classList.remove('active');
+                listViewBtn.classList.add('active');
+                localStorage.setItem('galleryView', 'list');
+            }
+        }
+
+        // Open admin modal
+        function openAdminModal() {
+            adminModal.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        // Close admin modal
+        function closeAdminModal() {
+            adminModal.classList.remove('open');
+            document.body.style.overflow = '';
+            adminForm.reset();
+            imagePreview.style.display = 'none';
+        }
+
+        // Handle preview image
+        function handleImagePreview() {
+            const imageUrl = artworkImage.value;
+
+            if (imageUrl) {
+                imagePreview.src = imageUrl;
+                imagePreview.style.display = 'block';
+
+                // Check if image loads correctly
+                imagePreview.onerror = () => {
+                    imagePreview.style.display = 'none';
+                    showToast('Das Bild konnte nicht geladen werden. Bitte überprüfen Sie die URL.', 'error');
+                };
+            } else {
+                imagePreview.style.display = 'none';
+            }
+        }
+
+        // Add new artwork
+        function addNewArtwork(e) {
+            e.preventDefault();
+
+            // Get form data
+            const title = document.getElementById('artworkTitle').value;
+            const category = document.getElementById('artworkCategory').value;
+            const year = parseInt(document.getElementById('artworkYear').value);
+            const dimensions = document.getElementById('artworkDimensions').value;
+            const description = document.getElementById('artworkDescription').value;
+            const image = document.getElementById('artworkImage').value;
+
+            // Create new artwork object
+            const newArtwork = {
+                id: artworks.length + 1,
+                title,
+                category,
+                year,
+                dimensions,
+                description,
+                image,
+                originalUrl: 'https://karl-ulinger.blogspot.com/p/werke.html?m=1'
+            };
+
+            // Show loader
+            showLoader();
+
+            // Simulate API request
+            setTimeout(() => {
+                // Add to artworks array
+                artworks.unshift(newArtwork);
+
+                // Re-render gallery
+                renderGallery();
+
+                // Close modal and show success message
+                closeAdminModal();
+                hideLoader();
+                showToast('Kunstwerk erfolgreich hinzugefügt!');
+            }, 1000);
+        }
+
+        // Fetch artworks from Blogspot
+        function fetchArtworksFromBlogspot() {
+            showLoader();
+
+            // In a real implementation, this would fetch data from the Blogspot site
+            // For this demo, we'll populate with the provided links
+
+            // The image links from the CSV file
+            const blogspotLinks = [
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjKEj_AHrJ0pz1SEpcbXqPMlkFkeh0iDqdXRumXePKruF8WwpWhL3QxT4FN37MUim0oCKgpZnpY0JUOgnXVAU6GiySXzeJnSkIC4zFBak1kKlkJjP2ySmbkmuFe7cMc0FBhofsL7iqz9ZHA/s1600/1592262927534862-0.png",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj2tgbrkKqUSaM-HYnws7Ia4YHJDO7q8uX7Z9AurIsGb_1IJQiRTz7n-VWJRmujZxpS3Q8njIZlAFIUlc55jVkO1euKoJ6VPago28eokZxD0odwjRgkL-82KjBlangaoQduFJp7MKe3SB17/s1600/1592262877849693-1.png",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgFDP10vxxpJkwkKneIkF05Xz5LJNQGBTfY9yHbe4Rl7_zv4VRslOSwU591TkYAzXYR_grmxReEPssMKoKfMivAVWeL_ivBphcxVqWaFSKoboGIgB-csqXr8F6GN9iCtE1Ik3X-u8Hupj1h/s1600/1592262831064959-2.png",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh9o30GuYPutfN0bP6cCnR96H1FJDzv0WfskTf_alUs3xO9hsxemRJutUzNjRRHMT7y7jlfYzUaxYMutbqoPDFLfGxB3AWY0fQB8H6FF92MNh34aII0aefLmPAVKSeWtV7jBX6IL4VqV44w/s1600/1592262804493859-3.png",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjckbMJYmZCspE6O6jtJid29SHm7FH8gsYXxFt9XLnC18m9WT-WVBIkiRVvNYhb6opk5_FHANcfCzyd2oovPCzoLgZreAsiSzgRjdRptRnSR-nOS_Uh-1hnPAFv2zoYc8A5y4nmS-gn54Mr/s1600/1592262780228587-4.png",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj0sHMXJLyXVUJS-pIaPnAwuVMnUqSwbTOlbWDthnafLPckEeG5dAAeNj4ZlrM9h_-zWASN79ns2Kpj4htD3tk26gG2fRVgN1JZGB9DxXhTonykv6aa0Gm-guNltn-96UWyOx1SZg0lga9N/s1600/1592473603406819-0.png",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjimpP-H6kaEFcqTuWBr4X_BEQWuyFVk75tTNLY24DEZTPUXdHhWMTD9Y-X-LIb5FmUOuvJuPpe7QDgMF9jTZyvbYfG1Mpjd2_ceWZpYzTCFgyMksPMUcNXwrl6bbGFFsrTwzVURs-Ri2Do/s1600/1592473583673941-1.png",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgLNZchmPI9_wvyYEIRHeK4aGF5CWi1OdCRsP2iSUEArBeW65Tn2j5dzZ-O73r5viZuRd7EO9ESDDmFaDoIgYJNnT9nQrFA9FqED09iVEh8p10XEyzlKa6Vx8XYUDzLARyzOGWdeyCKGgZQ/s1600/1592473539896040-2.png",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjuQHpVl8KYapLgRiNFawEvaci1BjRgJoCxQZK2-F74UTaguIhEjtnuUGfDguxu7nQjSNCe7gppai48xkvAsh_GrSsvjGlk6CWuWIX0KDAIfpv7LR2mB_XQVhyphenhyphenKt9tWu5VhF48xL07UoQg3/s1600/1592513513943009-0.png",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQFJVRFRERPXnwV9AsXcDgwcTKAlwFuGIAfdvnlb07X3B0a8_L_4D1d112MIAcGogrXiPez2e8B1YsPJDdEExAevvFWYYaCATTHGyCkPRMzS6zEP4etUr_lMkyktTy82DanCLIbJWp5TqT/s1600/Tropfen+auf+den+Heissen+stein.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAMnjJKVU57dogXKErhyNH02pa5uNc7NzkQl2e9cK7fD38wForg0awHlAnxzhcKECoZ1eWzJu2-fYRTsqAxMrXZyjARCF8MBs2-wdI2opWv0p-bpdf3YNVj6PJpjf17-M48EBUhfj11vsB/s1600/Aufbruch+ins+ungewisse.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizNtVqQKeOv6zRuxVfmSHefFVvoK6NBtI_t9bmICJh6WSr2l5ZKv72Yq-Fi2cTDErtfUWIQuoVBAOZg6K4lrH8UHQp7CX-IkdZ1bOpo5mdndv0TBaEdofou6IlqfR6Na9oEGetDkNfNJrZ/s1600/Karlson2030.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAxncmXYRFyJ9RAO9LHbK0tT4iiCpf7i97dtcNLRcQXIF67KpM2HdAcqrnvzwrSCdEJAP9XZmN_NThSAOZB6KuPArITMO4Z3A6ZgtvpeT_fXEkwtv5dexZnTNtY3J60G-zu3yTkwfSpjiq/s1600/ifinite-damage.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizv9d_c4-_7PN_hD4XL9Fd39NhlvC3xpeDIrojGxctxmuT4RmsM_EMtetFSYeic5rTNf5rI0Mss5Mt9_E__-kSky9yhzSLXzJAaQNqBVhe0Q2ps24V9ULWUxO3rvvNR2yEl3Fe_ezqmdFl/s1600/Rastlos.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgEe2yoS8-UHyEKYRdVn54Ax-2yFSp6MxG6w0XmBSpPIseEmazl_8GrQDQnAbHDBirzq8G61op6-EVO88MzC6B0s5lmUK18iUdJAVDgXt8pW-EZfZYL-Gv2qSxJAPho9PqjP0YSsPmUxkUM/s1600/Der+quallenschlag.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjle7ql7FQhUunE2e4fmc7TA_wlUv4I0Z4CjeIg-zVk7PcS2wnaKSjL7A5YFcChpOFh1PHYCcutjuTVnKSZIyeUp7dk0n9UlyyHKAwweb2ugsApONPGtam-nlz3nfcCGgiGsgPh6lBReeJO/s1600/digital-apeness.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgc5ya0WivllWpPPnUz4npa-2HK_RS30PMoHorF88QgfK8bWFzX-F6w8uKZiVTDdcT1VVL-kkDUE9b4ezYQUt2KJ1QcbbfV8Ki4U8DKurnS-S4X3q6uP6Y2IXAdv9oWfdBvhLYJd33bpuIK/s1600/sinneswandel.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgHu0ztkf-vNUPZNad4GLapKaZTLk5tYc7rVipmkAQHqm0zNK_oGjPZxnMGyjGSLvY3eeiGxEEErMEFEadvc9fJcuPd0A8-slz_Yo57vRMIgt6hnf8gC4nw9QoHPRRDcSm8845QYmuT-K_J/s1600/Dorephie.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPWenGnsWPmEM6Q7GZ_H-LpWqZm4DKMOaDt29EWJaO0_HULDm_jUuBQvu-en5KhzAnwFBJanA1RdYVRa2so1HNt3h2bPpnXuaUUjjVYHct8NyWejlxv8eVcptV_8WUTxDwpEexaLFE2YoH/s1600/colourhitch.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjw7hD5EW2FWVsYVsiRACuKy86wTuEoOi2nclSsC-jvih8fNph9zpmQ5j1qwtMm4MeDmOjEuvRpnwQu8Vy8FxkVWb7W2NPzmJVHLXTP1pyVNuxHqpfN1z3nsEEA-J41csMo0tLcCWMjFNfU/s1600/Wild+West.JPG",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgr61K0tfs8YhN7XgzkxDuMw1_Q1zEiiUPfJoswoLMoEjaWke_2QwqqfUD_8jRpYVcOR5pAXHEIUakwTWPX16mXDXh6ePYClPChv2zC6wMow3c9zFpKD9hrPe08mUE-49vxXl0FnRa1xwbF/s1600/Stummer+Indianer.JPG",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEillOgKs76pHQY04h9CmnlUDzCnV-XLR5_7vSiDgEn7DXRLGCo6nCmSuw8p_OMseDyXvf9lUfnIWlJ2IryAnuIez0f6-9aNMT3E1RSLxLO_TcJZiqMGX0BPjhBnENJXAvXCLdUvDWtnEbXY/s1600/Kampf+der+elemente.JPG",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTpLVHzqaEF-l9OT5jexvnbQGYC-erfK0_O-dkM2TmYrPVpZWEVX2dpSQEtKnDR8y0K9SoaKLcY9PXzt-cq0d9-hhOYppqTPl259vFF6W_rDfHFxNNj3BNBaxIwWv9Pubi8ujBGaFpdW7i/s1600/confusion.jpg",
+                "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbhg0Hb8to9GT1CM9Fpym0XO8iOODHsCHndNM0atvPSRvRp6JGwAIHwkZbZNXMXgtPZZjDvOdH9cJnrs7GYK1MGe4FUDKJ2Ku2yjDyEN4QfMkB2700DorZCTPT2Tj_3u_MR7q628Yq8NM4/s1600/geist.JPG"
+            ];
+
+            // Create artwork objects from links
+            artworks = blogspotLinks.map((link, index) => {
+                // Extract title from the URL
+                const urlParts = link.split('/');
+                const filenamePart = urlParts[urlParts.length - 1];
+                const filenameDecoded = decodeURIComponent(filenamePart);
+                const titleMatch = filenameDecoded.match(/([^\/]+)\.(jpg|png|jpeg)/i);
+                const rawTitle = titleMatch ? titleMatch[1] : `Kunstwerk ${index + 1}`;
+
+                // Clean up title
+                let title = rawTitle
+                    .replace(/\+/g, ' ')
+                    .replace(/\d+(-\d+)?$/g, '')
+                    .split(/[,._-]/)[0]
+                    .trim();
+
+                if (title.length < 3) {
+                    title = `Komposition ${index + 1}`;
+                }
+
+                // Determine category based on filename patterns
+                let category = 'gemälde';
+                if (rawTitle.toLowerCase().includes('digital')) {
+                    category = 'digital';
+                } else if (rawTitle.toLowerCase().includes('zeichnung')) {
+                    category = 'zeichnung';
+                } else if (rawTitle.toLowerCase().includes('skulptur')) {
+                    category = 'skulptur';
+                }
+
+                // Generate a random year between 2018 and 2023
+                const year = Math.floor(Math.random() * (2023 - 2018 + 1) + 2018);
+
+                // Generate random dimensions
+                const width = Math.floor(Math.random() * 60) + 40;
+                const height = Math.floor(Math.random() * 60) + 40;
+                const dimensions = `${width} x ${height} cm`;
+
+                // Generate description based on title and category
+                let description;
+                if (category === 'gemälde') {
+                    description = `Ein ausdrucksstarkes Gemälde, das die Emotionen und visuellen Eindrücke von "${title}" einfängt. Die Farbkomposition und dynamischen Elemente schaffen eine einzigartige Atmosphäre, die den Betrachter in ihren Bann zieht.`;
+                } else if (category === 'digital') {
+                    description = `Eine digitale Kunstkomposition, die traditionelle Maltechniken mit modernen digitalen Werkzeugen verbindet. "${title}" erforscht die Grenzen zwischen analoger und digitaler Kunstwelt.`;
+                } else if (category === 'zeichnung') {
+                    description = `Eine detaillierte Zeichnung, die durch präzise Linienführung und subtile Schattierungen besticht. "${title}" zeigt die handwerkliche Meisterschaft und das Auge für Details des Künstlers.`;
+                } else {
+                    description = `Ein faszinierendes Kunstwerk, das die künstlerische Vision und den einzigartigen Stil von Karl Ulinger zum Ausdruck bringt. "${title}" lädt zum Verweilen und Reflektieren ein.`;
+                }
+
+                return {
+                    id: index + 1,
+                    title: title,
+                    category: category,
+                    year: year,
+                    dimensions: dimensions,
+                    description: description,
+                    image: link,
+                    originalUrl: 'https://karl-ulinger.blogspot.com/p/werke.html?m=1'
+                };
+            });
+
+            // Simulate network delay
+            setTimeout(() => {
+                renderGallery();
+                hideLoader();
+                showToast('Kunstwerke erfolgreich geladen!');
+            }, 1500);
+        }
+
+        // Event Listeners
+
+        // Filter buttons
+        filterButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active class from all buttons
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+
+                // Add active class to clicked button
+                button.classList.add('active');
+
+                // Filter gallery
+                const category = button.dataset.filter;
+                filterGallery(category);
+            });
+        });
+
+        // Search input
+        searchInput.addEventListener('input', () => {
+            searchGallery(searchInput.value);
+        });
+
+        // Gallery view toggle
+        gridViewBtn.addEventListener('click', () => toggleGalleryView('grid'));
+        listViewBtn.addEventListener('click', () => toggleGalleryView('list'));
+
+        // Modal close
+        modalClose.addEventListener('click', closeArtworkModal);
+        artworkModal.addEventListener('click', (e) => {
+            if (e.target === artworkModal) {
+                closeArtworkModal();
+            }
+        });
+
+        // Admin modal
+        adminButton.addEventListener('click', openAdminModal);
+        adminModalClose.addEventListener('click', closeAdminModal);
+        adminModal.addEventListener('click', (e) => {
+            if (e.target === adminModal) {
+                closeAdminModal();
+            }
+        });
+
+        // Image preview
+        artworkImage.addEventListener('input', handleImagePreview);
+
+        // Admin form submit
+        adminForm.addEventListener('submit', addNewArtwork);
+
+        // Theme toggle
+        themeToggle.addEventListener('click', toggleTheme);
+
+        // Mobile menu
+        mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+
+        // Contact form
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            showLoader();
+
+            // Simulate form submission
+            setTimeout(() => {
+                hideLoader();
+                showToast('Nachricht erfolgreich gesendet!');
+                contactForm.reset();
+            }, 1000);
+        });
+
+        // Initialize
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
+        }
+
+        // Load saved gallery view
+        const savedView = localStorage.getItem('galleryView');
+        if (savedView === 'list') {
+            toggleGalleryView('list');
+        }
+
+        // Fetch artworks
+        fetchArtworksFromBlogspot();
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 70,
+                        behavior: 'smooth'
+                    });
+                }
+
+                // Close mobile menu if open
+                if (navLinks.classList.contains('active')) {
+                    toggleMobileMenu();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

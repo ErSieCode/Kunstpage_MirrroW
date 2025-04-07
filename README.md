@@ -4,9 +4,9 @@
 
 Dies ist eine moderne, interaktive Single-Page-Webanwendung zur Präsentation der Kunstwerke von Karl Ulinger. Die Seite wurde mit reinem HTML, CSS und JavaScript erstellt und nutzt eingebettete JSON-Daten zur dynamischen Anzeige der Kunstwerke und Blog-Einblicke.
 
-![Screenshot der Galerie](link/zum/screenshot.png) <!-- WICHTIG: Füge hier einen Screenshot deiner Seite ein! -->
+![Screenshot der Galerie](link/zum/screenshot.png)  (später) <!-- WICHTIG: Füge hier einen Screenshot deiner Seite ein! -->
 
-[Link zur Live-Demo](deine-live-demo-url.hier) <!-- Optional: Füge hier einen Link zur gehosteten Version hinzu -->
+[Link zur Live-Demo]([deine-live-demo-url.hier](https://github.com/ErSieCode/Kunstpage_MirrroW/blob/main/Karl_Ulinger_Art.html))  (später) <!-- Optional: Füge hier einen Link zur gehosteten Version hinzu -->
 
 ## ✨ Features
 

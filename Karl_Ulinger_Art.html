@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karl Ulinger | Kunst Galerie - Werkschau</title>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Global Styles & Variables */
+        :root {
+            --primary-color: #689f38; /* Green */
+            --secondary-color: #fdd835; /* Yellow */
+            --primary-dark: #4CAF50;
+            --secondary-dark: #fbc02d;
+            --bg-color: #ffffff;
+            --text-color: #333333;
+            --light-bg: #f5f5f5;
+            --card-bg: #ffffff;
+            --border-radius: 12px;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --transition: all 0.3s ease;
+             --card-bg-rgb: 255, 255, 255;
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #7cb342;
+            --secondary-color: #fdd835;
+            --primary-dark: #558b2f;
+            --secondary-dark: #f9a825;
+            --bg-color: #121212;
+            --text-color: #f5f5f5;
+            --light-bg: #1e1e1e;
+            --card-bg: #242424;
+             --card-bg-rgb: 36, 36, 36;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; background-color: var(--bg-color); color: var(--text-color); line-height: 1.6; transition: background-color 0.3s ease, color 0.3s ease; font-size: 16px; }
+        .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 0 1.5rem; }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: #333;
+            padding: 0.6rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        nav { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.7rem; font-weight: 700; color: #333; text-decoration: none; display: flex; align-items: center; gap: 1rem; }
+        .logo img { height: 60px; width: auto; vertical-align: middle; }
+        .logo span { display: inline-block; }
+         @media (max-width: 450px) { .logo span { display: none; } }
+
+        .nav-links { display: flex; list-style: none; gap: 1rem; }
+        .nav-links a { color: #333; text-decoration: none; font-weight: 500; transition: var(--transition); padding: 0.5rem 1rem; border-radius: 4px; position: relative; font-size: 0.95rem; }
+        .nav-links a::after { content: ''; position: absolute; width: 0; height: 2px; bottom: 2px; left: 50%; transform: translateX(-50%); background-color: var(--primary-dark); transition: width 0.3s ease; }
+        .nav-links a:hover { background-color: rgba(0, 0, 0, 0.05); }
+        .nav-links a:hover::after, .nav-links a.active::after { width: 70%; }
+
+        .nav-controls { display: flex; align-items: center; gap: 1rem; }
+        .theme-toggle, .mobile-menu-btn { background: none; border: none; color: #333; cursor: pointer; font-size: 1.3rem; }
+        .mobile-menu-btn { display: none; font-size: 1.5rem; }
+
+        /* Hero */
+        .hero { min-height: 65vh; background: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)), url("https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizNtVqQKeOv6zRuxVfmSHefFVvoK6NBtI_t9bmICJh6WSr2l5ZKv72Yq-Fi2cTDErtfUWIQuoVBAOZg6K4lrH8UHQp7CX-IkdZ1bOpo5mdndv0TBaEdofou6IlqfR6Na9oEGetDkNfNJrZ/s0/Karlson2030.jpg") no-repeat center center; background-size: cover; background-attachment: fixed; color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 4rem 1.5rem; }
+        .hero h1 { font-size: clamp(2.2rem, 6vw, 3.5rem); margin-bottom: 1.5rem; text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.8); font-weight: 700; letter-spacing: 1px; }
+        .hero p { font-size: clamp(1rem, 2.5vw, 1.3rem); max-width: 800px; margin: 0 auto 2.5rem; text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.8); line-height: 1.7; }
+
+        /* Buttons */
+        .btn { display: inline-block; padding: 0.9rem 2rem; background-color: var(--primary-color); color: white; text-decoration: none; border-radius: var(--border-radius); transition: var(--transition); font-weight: 600; border: 2px solid transparent; cursor: pointer; font-size: 1rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .btn:hover { background-color: var(--primary-dark); transform: translateY(-3px) scale(1.03); box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2); }
+        .btn-secondary { background-color: var(--secondary-color); color: #333; }
+         [data-theme="dark"] .btn-secondary { color: #333; }
+        .btn-secondary:hover { background-color: var(--secondary-dark); color: #222; }
+         .btn-small { padding: 0.5rem 1rem; font-size: 0.85rem; }
+
+        /* Sections */
+        .section { padding: clamp(3rem, 8vw, 5rem) 0; }
+        .section-title { text-align: center; margin-bottom: clamp(2.5rem, 6vw, 4rem); position: relative; font-size: clamp(2rem, 5vw, 2.8rem); font-weight: 600; }
+        .section-title::after { content: ''; display: block; width: clamp(100px, 20vw, 150px); height: 4px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); margin: 1rem auto 0; border-radius: 2px; }
+
+        /* Gallery */
+        .filters { display: flex; justify-content: center; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2.5rem; }
+        .filter-btn { padding: 0.6rem 1.5rem; background-color: var(--light-bg); border: 1px solid transparent; border-radius: 50px; cursor: pointer; transition: var(--transition); font-weight: 500; color: var(--text-color); font-size: 0.9rem; }
+        .filter-btn.active, .filter-btn:hover { background-color: var(--primary-color); color: white; border-color: var(--primary-dark); transform: translateY(-2px); box-shadow: 0 3px 6px rgba(0,0,0,0.1); }
+        .search-bar { max-width: 600px; margin: 0 auto 2.5rem; position: relative; }
+        .search-bar input { width: 100%; padding: 1rem 1.5rem 1rem 3.5rem; border: 2px solid var(--light-bg); [data-theme="dark"] & { border-color: var(--card-bg); } border-radius: 50px; font-size: 1rem; transition: var(--transition); background-color: var(--card-bg); [data-theme="dark"] & { background-color: var(--light-bg); } color: var(--text-color); }
+        .search-bar input:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.3); }
+        .search-bar i { position: absolute; left: 1.5rem; top: 50%; transform: translateY(-50%); color: #aaa; font-size: 1rem; }
+        .view-options { display: flex; justify-content: center; gap: 1rem; margin-bottom: 2.5rem; }
+        .view-btn { background-color: var(--light-bg); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: var(--transition); color: var(--text-color); font-size: 1.1rem; }
+        .view-btn.active, .view-btn:hover { background-color: var(--primary-color); color: white; transform: scale(1.1); }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 2rem; }
+        .gallery-grid.list-view { grid-template-columns: 1fr; gap: 1.5rem; }
+
+        /* Artwork Card */
+        .artwork-card { background-color: var(--card-bg); border-radius: var(--border-radius); overflow: hidden; box-shadow: var(--shadow); transition: var(--transition); position: relative; display: flex; flex-direction: column; }
+        .artwork-card:hover { transform: translateY(-8px); box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15); }
+        .artwork-image-container { position: relative; overflow: hidden; height: 260px; width: 100%; }
+        .gallery-grid.list-view .artwork-card { flex-direction: row; min-height: 180px; height: auto; align-items: flex-start; }
+        .gallery-grid.list-view .artwork-image-container { width: 200px; height: auto; min-height: 180px; aspect-ratio: 1 / 1; flex-shrink: 0; }
+        .artwork-image { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease, filter 0.4s ease; }
+        .artwork-card:hover .artwork-image { transform: scale(1.08); filter: brightness(1.05); }
+        .artwork-info { padding: 1.5rem; display: flex; flex-direction: column; flex-grow: 1; justify-content: space-between; }
+        .gallery-grid.list-view .artwork-info { padding: 1rem 1.5rem; min-height: 180px; }
+        .artwork-title { font-size: 1.2rem; margin-bottom: 0.5rem; font-weight: 600; color: var(--primary-dark); [data-theme="dark"] & { color: var(--primary-color); } }
+        .artwork-meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1rem; margin-bottom: 1rem; color: #777; [data-theme="dark"] & { color: #aaa; } font-size: 0.85rem; }
+        .artwork-meta i { margin-right: 0.3em; }
+        .artwork-description { margin-bottom: 1rem; font-size: 0.95rem; line-height: 1.6; flex-grow: 1; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; }
+        .gallery-grid.list-view .artwork-description { -webkit-line-clamp: unset; display: block; max-height: none; overflow: visible; white-space: normal; }
+        .artwork-link { margin-top: auto; padding-top: 0.5rem; }
+        .gallery-grid.list-view .artwork-link { margin-top: 1rem; }
+        .original-link { display: inline-flex; align-items: center; gap: 0.5rem; color: var(--primary-color); text-decoration: none; font-weight: 500; transition: var(--transition); font-size: 0.9rem; }
+        .original-link:hover { color: var(--primary-dark); text-decoration: underline; }
+        .original-link i { font-size: 1.1em; }
+        .artwork-overlay { position: absolute; top: 1rem; right: 1rem; display: flex; flex-direction: column; gap: 0.8rem; opacity: 0; transition: opacity 0.3s ease; z-index: 2; }
+        .artwork-card:hover .artwork-overlay { opacity: 1; }
+        .overlay-btn { width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; background-color: rgba(255, 255, 255, 0.85); backdrop-filter: blur(4px); border: none; cursor: pointer; font-size: 1rem; transition: var(--transition); color: #333; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        .overlay-btn:hover { background-color: var(--primary-color); color: white; transform: scale(1.1); }
+        .artwork-badge { position: absolute; top: 1rem; left: 1rem; background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 0.3rem 0.9rem; border-radius: 100px; font-size: 0.8rem; font-weight: 600; box-shadow: 0 2px 4px rgba(0,0,0,0.2); text-transform: capitalize; z-index: 1; }
+
+        /* About */
+        #about .about-content { display: flex; gap: 3rem; flex-wrap: wrap; align-items: flex-start; }
+        #about .about-image { flex: 1; min-width: 280px; max-width: 400px; }
+        #about .about-image img { width: 100%; border-radius: var(--border-radius); box-shadow: var(--shadow); object-fit: cover; }
+        #about .about-text { flex: 1.5; min-width: 300px; }
+        #about .about-text h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary-color); font-weight: 600; }
+        #about .about-text p { margin-bottom: 1.5rem; line-height: 1.8; font-size: 1.05rem; }
+
+        /* News */
+        #news .news-intro { text-align: center; margin-bottom: 2.5rem; font-size: 1.1rem; color: #555; [data-theme="dark"] & { color: #bbb; } max-width: 800px; margin-left: auto; margin-right: auto; }
+        #news .news-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+        .news-item { background-color: var(--light-bg); padding: 2rem; border-radius: var(--border-radius); box-shadow: var(--shadow); transition: var(--transition); display: flex; flex-direction: column; }
+         .news-item:hover { transform: translateY(-5px); box-shadow: 0 8px 16px rgba(0,0,0,0.1); }
+        .news-item h3 { color: var(--primary-color); margin-bottom: 0.5rem; font-size: 1.3rem; }
+        .news-item .news-date { font-size: 0.9rem; color: #777; [data-theme="dark"] & { color: #aaa; } margin-bottom: 1rem; }
+        .news-item p { margin-bottom: 1.5rem; line-height: 1.7; flex-grow: 1; font-size: 0.95rem; }
+        .news-item img.news-thumbnail { max-width: 100%; height: 150px; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; }
+        .news-item a.read-more { color: var(--primary-dark); [data-theme="dark"] & { color: var(--primary-color); } text-decoration: none; font-weight: 600; align-self: flex-start; margin-top: auto; }
+         .news-item a.read-more:hover { text-decoration: underline; }
+         .news-placeholder-note { grid-column: 1 / -1; text-align: center; padding: 2rem; background-color: var(--light-bg); border: 1px solid var(--light-bg); [data-theme="dark"] & { background-color: var(--card-bg); border-color: var(--card-bg); } border-radius: var(--border-radius); color: #555; [data-theme="dark"] & { color: #ccc; } }
+         .news-placeholder-note p { margin-bottom: 1rem; }
+
+        /* Contact */
+        #contact .contact-wrapper { display: flex; gap: 3rem; flex-wrap: wrap; }
+        #contact .contact-info { flex: 1; min-width: 300px; }
+        #contact .contact-info h3 { font-size: 1.8rem; margin-bottom: 1rem; color: var(--primary-color); font-weight: 600; }
+        #contact .contact-info p { margin-bottom: 1rem; line-height: 1.8; font-size: 1.05rem; }
+         #contact .contact-details p { margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.8rem; font-size: 1rem; }
+         #contact .contact-details i { min-width: 20px; color: var(--primary-color); font-size: 1.1rem; }
+         #contact .contact-details a { color: var(--text-color); text-decoration: none; }
+         #contact .contact-details a:hover { color: var(--primary-color); text-decoration: underline;}
+        #contact .contact-form { flex: 1.5; min-width: 300px; background-color: var(--light-bg); padding: 2.5rem; border-radius: var(--border-radius); box-shadow: var(--shadow); }
+        .form-group { margin-bottom: 1.5rem; }
+        .form-group label { display: block; margin-bottom: 0.6rem; font-weight: 500; font-size: 0.95rem; }
+        .form-group input, .form-group textarea, .form-group select { width: 100%; padding: 0.9rem 1.2rem; border: 1px solid #ccc; [data-theme="dark"] & { border-color: #555; } border-radius: 8px; background-color: var(--card-bg); [data-theme="dark"] & { background-color: var(--light-bg); } color: var(--text-color); font-family: inherit; font-size: 1rem; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        .form-group input:-webkit-autofill, .form-group textarea:-webkit-autofill, .form-group select:-webkit-autofill { -webkit-box-shadow: 0 0 0 30px var(--card-bg) inset !important; [data-theme="dark"] & { -webkit-box-shadow: 0 0 0 30px var(--light-bg) inset !important; } -webkit-text-fill-color: var(--text-color) !important; }
+        .form-group input:focus, .form-group textarea:focus, .form-group select:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(139, 195, 74, 0.3); }
+         .form-group textarea { resize: vertical; min-height: 120px; }
+
+        /* Modal */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.88); display: flex; align-items: center; justify-content: center; z-index: 1000; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0s 0.3s linear; backdrop-filter: blur(6px); }
+        .modal.open { opacity: 1; visibility: visible; transition: opacity 0.3s ease; }
+        .modal-content { background-color: var(--card-bg); border-radius: var(--border-radius); max-width: 1100px; width: 92%; max-height: 90vh; overflow-y: auto; position: relative; transform: scale(0.95) translateY(10px); transition: transform 0.3s ease, opacity 0.3s ease; box-shadow: 0 15px 40px rgba(0,0,0,0.3); opacity: 0; }
+        .modal.open .modal-content { transform: scale(1) translateY(0); opacity: 1; }
+        .modal-close { position: absolute; top: 0.8rem; right: 0.8rem; background: rgba(0,0,0,0.1); [data-theme="dark"] & { background: rgba(255,255,255,0.1); } border: none; width: 38px; height: 38px; border-radius: 50%; font-size: 1.4rem; cursor: pointer; color: var(--text-color); z-index: 10; transition: var(--transition); display: flex; align-items: center; justify-content: center; }
+        .modal-close:hover { background-color: var(--primary-color); color: white; transform: rotate(90deg) scale(1.1); }
+        .modal-body { padding: clamp(1.5rem, 4vw, 3rem); display: grid; grid-template-columns: 1fr; gap: 2rem; }
+         @media (min-width: 768px) { .modal-body { grid-template-columns: minmax(300px, 1fr) 2fr; gap: 2.5rem; } .modal-image-container { order: 1; } .modal-info-wrapper { order: 2; } }
+         @media (min-width: 1024px) { .modal-body { grid-template-columns: minmax(400px, 1.2fr) 2fr; } }
+        .modal-image-container { flex-shrink: 0; display: flex; justify-content: center; align-items: center; overflow: hidden; border-radius: var(--border-radius); position: relative; background-color: var(--light-bg); min-height: 300px; max-height: 75vh; }
+        .modal-image { max-width: 100%; max-height: 75vh; object-fit: contain; display: block; border-radius: 4px; }
+        .modal-info-wrapper { display: flex; flex-direction: column; }
+        .modal-main h2 { font-size: clamp(1.8rem, 4vw, 2.2rem); margin-bottom: 1rem; color: var(--primary-dark); [data-theme="dark"] & { color: var(--primary-color); } font-weight: 600; line-height: 1.3; }
+        .modal-meta { display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; margin-bottom: 1.5rem; color: #666; [data-theme="dark"] & { color: #bbb; } font-size: 0.95rem; border-bottom: 1px solid var(--light-bg); [data-theme="dark"] & { border-color: var(--card-bg); } padding-bottom: 1rem; }
+         .modal-meta span:not(:last-child)::after { content: "|"; margin-left: 1.5rem; color: #ccc; [data-theme="dark"] & { color: #666; } }
+         .modal-meta span:first-child { text-transform: capitalize; }
+        .modal-description { margin-bottom: 1rem; line-height: 1.7; font-size: 1rem; }
+        .modal-description p { margin-bottom: 0.5em; }
+        .modal-curatorial { margin-top: 1.5rem; padding: 1.5rem; background-color: var(--light-bg); border-left: 4px solid var(--primary-color); border-radius: 4px var(--border-radius) var(--border-radius) 4px; }
+        .modal-curatorial h4 { margin-bottom: 0.75rem; font-size: 1.1rem; font-weight: 600; color: var(--primary-dark); [data-theme="dark"] & { color: var(--primary-color); } }
+        .modal-curatorial p { font-size: 0.95rem; line-height: 1.7; color: #555; [data-theme="dark"] & { color: #ccc; } }
+        .modal-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 2rem; }
+         .modal-actions .btn { padding: 0.7rem 1.5rem; font-size: 0.9rem; }
+         .modal-sidebar { padding: 1.5rem; background-color: var(--light-bg); border-radius: var(--border-radius); margin-top: 2rem; border: 1px solid #eee; [data-theme="dark"] & { border-color: #333; } }
+        .sidebar-title { font-size: 1.3rem; margin-bottom: 1.5rem; position: relative; font-weight: 600; color: var(--primary-color); }
+        .sidebar-title::after { content: ''; display: block; width: 50px; height: 3px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); margin-top: 0.5rem; }
+        .info-item { display: flex; flex-direction: column; margin-bottom: 1rem; }
+        .info-label { font-weight: 600; font-size: 0.85rem; color: #555; margin-bottom: 0.2rem; text-transform: uppercase; letter-spacing: 0.5px; [data-theme="dark"] & { color: #ccc; } }
+         .info-item span:last-child { font-size: 0.95rem; }
+        .image-attribution { margin-top: 1.5rem; font-size: 0.85rem; color: #777; border-top: 1px solid #ddd; padding-top: 1rem; [data-theme="dark"] & { color: #aaa; border-color: var(--card-bg); } }
+         .image-attribution a { color: var(--primary-color); text-decoration: none; }
+          .image-attribution a:hover { text-decoration: underline; }
+
+        /* Admin */
+        .admin-panel { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 90; }
+        .admin-button { width: 55px; height: 55px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-size: 1.6rem; cursor: pointer; box-shadow: var(--shadow); transition: var(--transition); }
+        .admin-button:hover { background-color: var(--primary-dark); transform: rotate(90deg) scale(1.1); }
+        .admin-form { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem 2rem; }
+        .form-group.full-width { grid-column: span 2; }
+        .image-preview-container { width: 100%; height: 200px; border: 2px dashed var(--light-bg); [data-theme="dark"] & { border-color: var(--card-bg); } border-radius: var(--border-radius); display: flex; align-items: center; justify-content: center; margin-top: 0.5rem; overflow: hidden; position: relative; background-color: var(--card-bg); [data-theme="dark"] & { background-color: var(--light-bg); } }
+        .image-preview-text { text-align: center; color: #aaa; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        .image-preview { width: 100%; height: 100%; object-fit: contain; display: none; }
+        #adminModal .modal-body h2 { text-align: center; margin-bottom: 2.5rem; color: var(--primary-color); }
+
+        /* Footer */
+        footer { background-color: var(--light-bg); padding: clamp(3rem, 7vw, 4rem) 0 clamp(1.5rem, 4vw, 2rem); margin-top: clamp(3rem, 8vw, 5rem); border-top: 4px solid var(--primary-color); }
+        .footer-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 2.5rem; margin-bottom: 3rem; }
+        .footer-widget h3 { font-size: 1.4rem; margin-bottom: 1.5rem; position: relative; font-weight: 600; }
+        .footer-widget h3::after { content: ''; display: block; width: 50px; height: 3px; background: linear-gradient(90deg, var(--primary-color), var(--secondary-color)); margin-top: 0.5rem; }
+         .footer-widget p { line-height: 1.7; color: #555; [data-theme="dark"] & { color: #bbb; } font-size: 0.95rem;}
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 0.8rem; }
+        .footer-links a { color: var(--text-color); text-decoration: none; transition: var(--transition); display: inline-block; font-size: 0.95rem; }
+        .footer-links a:hover { color: var(--primary-color); transform: translateX(5px); }
+        .footer-contact p { margin-bottom: 1rem; display: flex; align-items: flex-start; gap: 0.8rem; color: #555; [data-theme="dark"] & { color: #bbb; } font-size: 0.95rem;}
+        .footer-contact i { min-width: 18px; color: var(--primary-color); margin-top: 0.2rem; font-size: 1rem; }
+        .footer-social { display: flex; gap: 1rem; margin-top: 1.5rem; }
+        .footer-social a { width: 40px; height: 40px; border-radius: 50%; background-color: var(--card-bg); color: var(--text-color); display: flex; align-items: center; justify-content: center; transition: var(--transition); font-size: 1rem; border: 1px solid #eee; [data-theme="dark"] & { border-color: #444; } }
+        .footer-social a:hover { background-color: var(--primary-color); color: white; transform: translateY(-4px) scale(1.1); border-color: transparent; }
+        .footer-bottom { padding-top: 2rem; text-align: center; border-top: 1px solid rgba(0, 0, 0, 0.1); [data-theme="dark"] & { border-top-color: rgba(255, 255, 255, 0.1); } color: #888; [data-theme="dark"] & { color: #aaa; } font-size: 0.9rem; }
+
+        /* Loader */
+        .loader-container { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: var(--bg-color); display: flex; align-items: center; justify-content: center; z-index: 2000; opacity: 1; visibility: visible; transition: opacity 0.5s ease 0.2s, visibility 0s linear; }
+        .loader-container.hidden { opacity: 0; visibility: hidden; transition: opacity 0.5s ease, visibility 0s 0.5s linear; }
+        .loader { border: 5px solid var(--light-bg); [data-theme="dark"] & { border-color: var(--card-bg); } border-top: 5px solid var(--primary-color); border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Toast */
+        .toast { position: fixed; bottom: -100px; left: 50%; transform: translateX(-50%); background-color: var(--card-bg); color: var(--text-color); padding: 1rem 2rem; border-radius: var(--border-radius); box-shadow: 0 5px 15px rgba(0,0,0,0.2); z-index: 2000; opacity: 0; visibility: hidden; transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); min-width: 250px; text-align: center; font-size: 0.95rem; }
+        .toast.show { opacity: 1; visibility: visible; bottom: 2rem; }
+        .toast.success { border-left: 5px solid var(--primary-color); }
+        .toast.error { border-left: 5px solid #f44336; }
+
+        /* Responsive */
+         @media (max-width: 992px) { .admin-form { grid-template-columns: 1fr; } .form-group.full-width { grid-column: span 1; } .footer-grid { grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); } }
+        @media (max-width: 768px) {
+            .mobile-menu-btn { display: block; }
+            .nav-links { position: fixed; top: 71px; /* Adjusted */ left: 0; width: 100%; height: calc(100vh - 71px); background-color: var(--bg-color); flex-direction: column; align-items: center; padding-top: 2rem; gap: 1rem; transition: transform 0.3s ease-in-out; transform: translateX(-100%); overflow-y: auto; box-shadow: 5px 0 15px rgba(0,0,0,0.1); z-index: 99; }
+            .nav-links.active { transform: translateX(0); }
+            .nav-links a { color: var(--text-color); font-size: 1.1rem; padding: 0.8rem 2rem; width: 80%; text-align: center; border-radius: 8px; }
+             .nav-links a:hover { background-color: var(--light-bg); }
+             .nav-links a::after { display: none; }
+              [data-theme="dark"] .nav-links a { color: var(--text-color); }
+              [data-theme="dark"] .nav-links a:hover { background-color: var(--card-bg); }
+             #about .about-content, #contact .contact-wrapper { gap: 2rem; }
+             .section { padding: 2.5rem 0; }
+              .section-title { font-size: 2rem; }
+             .gallery-grid.list-view .artwork-image-container { width: 150px; min-height: 150px; }
+             .gallery-grid.list-view .artwork-info { min-height: 150px; }
+        }
+        @media (max-width: 576px) {
+            .container { padding: 0 1rem; }
+             body { font-size: 15px; }
+            .section-title { font-size: 1.8rem; }
+             .filters { gap: 0.5rem; }
+             .filter-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+            .search-bar input { padding: 0.8rem 1rem 0.8rem 3rem; }
+            .modal-body { padding: 1.5rem; }
+             #artworkModal .modal-body { grid-template-columns: 1fr; }
+             .modal-image-container { max-height: 50vh; }
+             .modal-main h2 { font-size: 1.6rem; }
+             .modal-description { font-size: 0.95rem; }
+             .modal-sidebar { padding: 1.5rem; margin-top: 1.5rem; }
+             .sidebar-title { font-size: 1.1rem; }
+             .modal-curatorial { padding: 1rem; }
+             .modal-curatorial h4 { font-size: 1rem; }
+             .modal-curatorial p { font-size: 0.9rem; }
+            #contact .contact-form { padding: 1.5rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
+             .footer-widget h3 { font-size: 1.3rem; }
+             footer { padding: 2.5rem 0 1.5rem; }
+             .admin-panel { bottom: 1rem; right: 1rem; }
+             .admin-button { width: 50px; height: 50px; font-size: 1.5rem; }
+              .gallery-grid.list-view .artwork-image-container { width: 120px; min-height: 120px; }
+             .gallery-grid.list-view .artwork-info { min-height: 120px; padding: 0.8rem 1rem; }
+             .gallery-grid.list-view .artwork-title { font-size: 1rem;}
+             .gallery-grid.list-view .artwork-meta { font-size: 0.75rem; margin-bottom: 0.5rem;}
+             .gallery-grid.list-view .artwork-description { font-size: 0.85rem; }
+             .gallery-grid.list-view .artwork-link { margin-top: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader, Toast -->
+    <div class="loader-container" id="loader"> <div class="loader"></div> </div>
+    <div class="toast" id="toast"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <a href="#home" class="logo">
+                    <img src="https://raw.githubusercontent.com/ErSieCode/Kunstpage_MirrroW/main/Karl_ulinger%20logo.png" alt="Karl Ulinger Logo">
+                    <span>Karl Ulinger</span>
+                </a>
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="#home" class="nav-link active">Start</a></li>
+                    <li><a href="#gallery" class="nav-link">Galerie</a></li>
+                    <li><a href="#about" class="nav-link">Über</a></li>
+                    <li><a href="#news" class="nav-link">News</a></li>
+                    <li><a href="#contact" class="nav-link">Kontakt</a></li>
+                </ul>
+                <div class="nav-controls"> <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode"> <i class="fas fa-moon"></i> </button> <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu" aria-expanded="false"> <i class="fas fa-bars"></i> </button> </div>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="hero" id="home">
+            <div class="container hero-content">
+                <h1>Karl Ulinger Kunstgalerie</h1>
+                <p>Entdecken Sie die faszinierende und expressive Welt von Karl Ulinger. Eine umfassende Online-Werkschau mit Gemälden, digitalen Arbeiten und mehr – Kunst, die Emotionen weckt und Perspektiven verschiebt.</p>
+                <a href="#gallery" class="btn">Zur Werkschau <i class="fas fa-arrow-right" style="margin-left: 0.5rem;"></i></a>
+            </div>
+        </section>
+        <!-- Gallery -->
+        <section class="section" id="gallery">
+            <div class="container">
+                <h2 class="section-title">Werkschau</h2>
+                <div class="search-bar"> <i class="fas fa-search"></i> <input type="text" id="searchInput" placeholder="Werke durchsuchen (Titel, Jahr, Technik...)" aria-label="Kunstwerke suchen"> </div>
+                <div class="filters" id="filters" role="tablist" aria-label="Filter für Kunstwerke">
+                    <button class="filter-btn active" data-filter="all" role="tab" aria-selected="true">Alle Werke</button>
+                    <button class="filter-btn" data-filter="gemälde" role="tab" aria-selected="false">Gemälde</button>
+                    <button class="filter-btn" data-filter="zeichnung" role="tab" aria-selected="false">Zeichnungen</button>
+                    <button class="filter-btn" data-filter="digital" role="tab" aria-selected="false">Digital</button>
+                    <button class="filter-btn" data-filter="print" role="tab" aria-selected="false">Print</button>
+                    <button class="filter-btn" data-filter="großformat" role="tab" aria-selected="false">Großformat</button>
+                    <button class="filter-btn" data-filter="andere" role="tab" aria-selected="false">Andere</button>
+                </div>
+                <div class="view-options"> <button class="view-btn active" id="gridViewBtn" title="Rasteransicht" aria-label="Rasteransicht" aria-pressed="true"> <i class="fas fa-th-large"></i> </button> <button class="view-btn" id="listViewBtn" title="Listenansicht" aria-label="Listenansicht" aria-pressed="false"> <i class="fas fa-list"></i> </button> </div>
+                <div class="gallery-grid" id="galleryGrid" role="list"> <p style="text-align: center; grid-column: 1/-1; padding: 2rem; font-style: italic;" id="gallery-placeholder">Lade Kunstwerke...</p> </div>
+            </div>
+        </section>
+        <!-- About -->
+        <section class="section" id="about">
+            <div class="container">
+                <h2 class="section-title">Über den Künstler</h2>
+                <div class="about-content">
+                    <div class="about-image"> <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhjCxSSKO-V-58VKVlz4Kd6HVTvzMiPZQM_y7ojsj2khPG2PcPTxnA2O_qmfhQgNNqOb-4RsqwChHp_8QKSGByF0VW8YZjCJUkRdc_bXR284Hgzwh6cbr4c6Ie26uMKPyPlWlr8koirhwBc/s0/IMG_20181029_143317_487.jpg" alt="Portrait von Karl Ulinger" loading="lazy"> </div>
+                    <div class="about-text">
+                        <h3>Karl Ulinger</h3>
+                        <p>Karl Ulinger ist ein zeitgenössisches Künstler Duo aus Wursthausen, dessen Werke sich durch eine kraftvolle, expressive Bildsprache und eine intensive Farbpalette auszeichnen. Sein unverwechselbarer Stil bewegt sich oft im Spannungsfeld zwischen Abstraktion und figurativen Andeutungen, wobei er emotionale Tiefe mit dynamischer Komposition verbindet.</p>
+                        <p>Mit einem Hintergrund, der sowohl traditionelle Maltechniken als auch digitale Medien umfasst, erforscht Ulinger vielfältige Ausdrucksformen. Ihre Arbeiten laden den Betrachter ein, über die Oberfläche hinauszublicken und eigene Assoziationen und Gefühle zu entdecken. Inspiration schöpft er aus Beobachtungen des Alltags, der Natur, philosophischen Fragestellungen und dem digitalen Raum.</p>
+                        <p>Ulingers Kunst wurde bereits in verschiedenen Kontexten präsentiert und findet Anklang bei Sammlern, die nach authentischer und emotional berührender zeitgenössischer Kunst suchen. Diese Online-Galerie bietet einen umfassenden Einblick in sein Schaffen.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- News / Events -->
+        <section class="section" id="news">
+            <div class="container">
+                <h2 class="section-title">Aktuelles & Blog-Einblicke</h2>
+                <p class="news-intro"> Ausgewählte Einblicke und Ankündigungen aus dem Blog. Für alle Neuigkeiten besuchen Sie bitte den <a href="https://karl-ulinger.blogspot.com/" target="_blank" rel="noopener noreferrer" style="color: var(--primary-color); font-weight: 500;">offiziellen Blog</a>. </p>
+                <div class="news-grid" id="newsGrid">
+                    <div class="news-placeholder-note" id="newsPlaceholder"> <i class="fas fa-sync-alt fa-spin" style="margin-right: 0.5rem;"></i> Lade Blog-Einblicke... </div>
+                </div>
+            </div>
+        </section>
+        <!-- Contact -->
+        <section class="section" id="contact">
+           <div class="container">
+                <h2 class="section-title">Kontakt aufnehmen</h2>
+                <div class="contact-wrapper">
+                    <div class="contact-info">
+                        <h3>Interesse an einem Werk?</h3>
+                        <p>Haben Sie Fragen zu einem bestimmten Kunstwerk, Interesse an einem Kauf oder möchten Sie mehr über die Arbeit von Karl Ulinger erfahren? Ich freue mich auf Ihre Nachricht!</p>
+                        <div class="contact-details" style="margin-top: 2rem;">
+                            <p><i class="fas fa-envelope fa-fw"></i> info@karlulinger-kunst.de (Beispiel)</p>
+                            <p><i class="fas fa-phone fa-fw"></i> +49 3643 123456 (Bsp. Weimar Vorwahl)</p>
+                            <p><i class="fas fa-map-marker-alt fa-fw"></i> Atelier Wursthausen bei Weimar (Besuch n. Vereinb.)</p>
+                            <p><i class="fab fa-blogger-b fa-fw"></i> <a href="https://karl-ulinger.blogspot.com/" target="_blank" rel="noopener noreferrer">Karl Ulinger Blogspot</a></p>
+                            <p><i class="fab fa-instagram fa-fw"></i> <a href="https://www.instagram.com/karl_ulinger/" target="_blank" rel="noopener noreferrer">Instagram</a></p>
+                        </div>
+                    </div>
+                    <div class="contact-form">
+                        <form id="contactForm" name="contact" netlify>
+                            <input type="hidden" name="form-name" value="contact">
+                            <div class="form-group"> <label for="name">Ihr Name</label> <input type="text" id="name" name="name" required autocomplete="name"> </div>
+                            <div class="form-group"> <label for="email">Ihre E-Mail</label> <input type="email" id="email" name="email" required autocomplete="email"> </div>
+                            <div class="form-group"> <label for="subject">Betreff</label> <input type="text" id="subject" name="subject" required> </div>
+                            <div class="form-group"> <label for="message">Ihre Nachricht</label> <textarea id="message" name="message" rows="6" required></textarea> </div>
+                            <button type="submit" class="btn" style="width: 100%;">Nachricht senden <i class="fas fa-paper-plane" style="margin-left: 0.5rem;"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-widget"><h3>Karl Ulinger</h3><p>Expressive & Abstrakte Kunst.</p><div class="footer-social">
+                    <a href="https://karl-ulinger.blogspot.com/" target="_blank" rel="noopener noreferrer" aria-label="Blogspot" title="Blogspot"><i class="fab fa-blogger-b"></i></a>
+                    <a href="https://www.instagram.com/karl_ulinger/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" title="Karl Ulinger auf Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/100063330363234/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" title="Karl Ulinger auf Facebook"><i class="fab fa-facebook-f"></i></a>
+                    </div></div>
+                <div class="footer-widget"><h3>Navigation</h3><ul class="footer-links"><li><a href="#home">Start</a></li><li><a href="#gallery">Galerie</a></li><li><a href="#about">Über</a></li><li><a href="#news">News</a></li><li><a href="#contact">Kontakt</a></li><li><a href="#">Impressum</a></li><li><a href="#">Datenschutz</a></li></ul></div>
+                <div class="footer-widget"><h3>Kontakt</h3><div class="footer-contact">
+                    <p><i class="fas fa-map-marker-alt fa-fw"></i> Wursthausen bei Weimar, Deutschland</p>
+                    <p><i class="fas fa-phone fa-fw"></i> +49 3643 123456 (Bsp.)</p>
+                    <p><i class="fas fa-envelope fa-fw"></i> info@karlulinger-kunst.de (Bsp.)</p>
+                    <p><i class="fas fa-clock fa-fw"></i> Besuch n. Vereinbarung</p></div></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; <span id="currentYear"></span> Karl Ulinger. Alle Rechte vorbehalten.</p></div>
+        </div>
+    </footer>
+    <!-- Modals -->
+    <div class="modal" id="artworkModal" aria-modal="true" role="dialog" aria-labelledby="artworkModalTitle" aria-describedby="artworkModalDescription"><div class="modal-content"><button class="modal-close" id="modalClose" aria-label="Dialog schließen"><i class="fas fa-times"></i></button><div class="modal-body" id="modalBody"><div class="loader-container" style="position: absolute; inset: 0; background: rgba(var(--card-bg-rgb), 0.8); display: flex; align-items: center; justify-content: center;"><div class="loader"></div></div></div></div></div>
+    <div class="modal" id="adminModal" aria-modal="true" role="dialog" aria-labelledby="adminModalTitle"><div class="modal-content"><button class="modal-close" id="adminModalClose" aria-label="Dialog schließen"><i class="fas fa-times"></i></button><div class="modal-body"><h2 id="adminModalTitle" style="text-align:center; color: var(--primary-color);">Neues Kunstwerk (Lokal)</h2><form id="adminForm" class="admin-form"><div class="form-group full-width"><p style="font-size: 0.9rem; text-align: center; color: #888;">Nur in dieser Sitzung sichtbar.</p></div><div class="form-group"><label for="artworkTitleAdmin">Titel</label><input type="text" id="artworkTitleAdmin" name="title" required></div><div class="form-group"><label for="artworkCategoryAdmin">Kategorie</label><select id="artworkCategoryAdmin" name="category" required><option value="" disabled selected>Wählen...</option><option value="gemälde">Gemälde</option><option value="zeichnung">Zeichnung</option><option value="digital">Digital</option><option value="print">Print</option><option value="großformat">Großformat</option><option value="andere">Andere</option></select></div><div class="form-group"><label for="artworkYearAdmin">Jahr</label><input type="number" id="artworkYearAdmin" name="year" min="1950" max="2100" required></div><div class="form-group"><label for="artworkDimensionsAdmin">Format/Maße</label><input type="text" id="artworkDimensionsAdmin" name="dimensions" placeholder="z.B. 70x100cm"></div><div class="form-group full-width"><label for="artworkDescriptionAdmin">Beschreibung</label><textarea id="artworkDescriptionAdmin" name="description" rows="4" required></textarea></div><div class="form-group full-width"><label for="artworkImageAdmin">Bild URL</label><input type="url" id="artworkImageAdmin" name="image" required placeholder="https://..."><div class="image-preview-container" id="imagePreviewContainer"><div class="image-preview-text"><i class="fas fa-image" style="font-size: 2rem; margin-bottom: 0.5rem;"></i><p>Vorschau</p></div><img src="" alt="Vorschau" id="imagePreview" class="image-preview"></div></div><div class="form-group full-width"><label for="artworkOriginalUrlAdmin">Blog-URL (Optional)</label><input type="url" id="artworkOriginalUrlAdmin" name="originalUrl" placeholder="Link zum Beitrag"></div><div class="form-group full-width" style="text-align: center;"><button type="submit" class="btn">Hinzufügen</button></div></form></div></div></div>
+    <!-- Admin Button -->
+    <div class="admin-panel"><button class="admin-button" id="adminButton" title="Neues Werk hinzufügen (lokal)" aria-label="Neues Werk hinzufügen (lokal)"><i class="fas fa-plus"></i></button></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+
+            // --- DEINE BEREITGESTELLTEN DATEN (Mit korrigierter URL für 'Rache der Natur') ---
+             const rawArtworkData = [
+                { "Name des Werkes": "KARTOFFELDRUCK", "Erscheinungsdatum": "2015", "Kunstform": "PRINT", "Formatgröße": "KARTOFFEL", "Beschreibung des Bildes": "Das Jahr beginnt mit frischer Kunst. Die ersten 200 Flyer sind Unikate! Handgemachter Kartoffeldruck", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgZVHyTznXcGZXmOkm2PD8S07z2hT_lDDVe86NSeZkV7zG5Y0L-avCnpW1TsrWqlxJVxum6IuJ0EufWh_PC1flqN4Rl4THmJx0Q2Gi1Wltqj9liqAzHBIq8Snm2jmVoJkAUul3NWC_mAOn2/s1600/FB_IMG_1420285820736.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgZVHyTznXcGZXmOkm2PD8S07z2hT_lDDVe86NSeZkV7zG5Y0L-avCnpW1TsrWqlxJVxum6IuJ0EufWh_PC1flqN4Rl4THmJx0Q2Gi1Wltqj9liqAzHBIq8Snm2jmVoJkAUul3NWC_mAOn2/s0/FB_IMG_1420285820736.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/2015/01/willkommen-2015_3.html", "Ursprungs_Post_Titel": "Willkommen 2015", "Ursprungs_Post_Datum": "3. Januar 2015 um 04:19", "Kuratorischer Beschreibungstext": "KARTOFFELDRUCK – In diesem Werk verschmilzt die rohe Schlichtheit der Natur mit experimenteller Drucktechnik. Der Einsatz handgemachter Kartoffelstempel verleiht jedem Flyer eine erdverbundene Struktur, die den Auftakt eines neuen Jahres in unvergänglicher, mutiger Kreativität zelebriert." },
+                { "Name des Werkes": "RACHE DER NATUR", "Erscheinungsdatum": "2010", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "Natur, findet ihren weg!", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpmzxF-z-73eKI8Hqcj6pTgWkkhCmMAA8n13H4Un6wC5DDqeV7QR2NoXEJoseJzSqWA8cTlQCLK68C5j7yr3zJad-A7pDHFgFHi6f9L-v-FGgSaqknWvFuHKTdSfy3abt7t8TQhwXok-Xh/s400/DSC_0182.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgpmzxF-z-73eKI8Hqcj6pTgWkkhCmMAA8n13H4Un6wC5DDqeV7QR2NoXEJoseJzSqWA8cTlQCLK68C5j7yr3zJad-A7pDHFgFHi6f9L-v-FGgSaqknWvFuHKTdSfy3abt7t8TQhwXok-Xh/s0/DSC_0182.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "Neue Werke im Neuwerk", "Ursprungs_Post_Datum": "15. August 2013 um 02:40", "Kuratorischer Beschreibungstext": "RACHE DER NATUR – Dieses kraftvolle Werk fängt die unbändige Energie der Natur ein. Wilde Pinselstriche und kontrastreiche Farbflächen symbolisieren den erbitterten Kampf der Erde, die sich aus Unterdrückung erhebt und in einem explosiven Dialog zwischen Naturgewalt und menschlicher Präsenz antwortet." }, // Quell_URL korrigiert
+                { "Name des Werkes": "DER TROPFEN AUF DEM HEIßEN STEIN", "Erscheinungsdatum": "2015", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "DER TROPFEN AUF DEM HEIßEN STEIN Acryl auf Leinwand 70 x 50cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQFJVRFRERPXnwV9AsXcDgwcTKAlwFuGIAfdvnlb07X3B0a8_L_4D1d112MIAcGogrXiPez2e8B1YsPJDdEExAevvFWYYaCATTHGyCkPRMzS6zEP4etUr_lMkyktTy82DanCLIbJWp5TqT/s320/Tropfen+auf+den+Heissen+stein.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQFJVRFRERPXnwV9AsXcDgwcTKAlwFuGIAfdvnlb07X3B0a8_L_4D1d112MIAcGogrXiPez2e8B1YsPJDdEExAevvFWYYaCATTHGyCkPRMzS6zEP4etUr_lMkyktTy82DanCLIbJWp5TqT/s0/Tropfen+auf+den+Heissen+stein.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "DER TROPFEN AUF DEM HEIßEN STEIN – Ein zarter Tropfen bricht die glühende Hitze einer lodernden Landschaft. Mit fein nuancierten Pinselstrichen fängt dieses Werk die paradoxe Zerbrechlichkeit und zugleich die kraftvolle Präsenz eines Augenblicks ein, der zwischen Vergänglichkeit und Ewigkeit oszilliert." },
+                { "Name des Werkes": "AUFBRUCH INS UNGEWISSE", "Erscheinungsdatum": "2015", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "100x100cm", "Beschreibung des Bildes": "AUFBRUCH INS UNGEWISSE Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAMnjJKVU57dogXKErhyNH02pa5uNc7NzkQl2e9cK7fD38wForg0awHlAnxzhcKECoZ1eWzJu2-fYRTsqAxMrXZyjARCF8MBs2-wdI2opWv0p-bpdf3YNVj6PJpjf17-M48EBUhfj11vsB/s320/Aufbruch+ins+ungewisse.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiAMnjJKVU57dogXKErhyNH02pa5uNc7NzkQl2e9cK7fD38wForg0awHlAnxzhcKECoZ1eWzJu2-fYRTsqAxMrXZyjARCF8MBs2-wdI2opWv0p-bpdf3YNVj6PJpjf17-M48EBUhfj11vsB/s0/Aufbruch+ins+ungewisse.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "AUFBRUCH INS UNGEWISSE – Dieses Werk eröffnet einen mutigen Schritt in die Unbekannte. Dynamische Farbflächen und kühne Linien führen den Blick in ein Labyrinth aus Emotion und Zukunft, in dem jeder Strich den Aufbruch in ein geheimnisvolles, unvertrautes Terrain symbolisiert." },
+                { "Name des Werkes": "KARLSON 2030", "Erscheinungsdatum": "2015", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "Acryl auf Leinwand 80 x 80 cm KARLSON 2030 Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizNtVqQKeOv6zRuxVfmSHefFVvoK6NBtI_t9bmICJh6WSr2l5ZKv72Yq-Fi2cTDErtfUWIQuoVBAOZg6K4lrH8UHQp7CX-IkdZ1bOpo5mdndv0TBaEdofou6IlqfR6Na9oEGetDkNfNJrZ/s320/Karlson2030.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEizNtVqQKeOv6zRuxVfmSHefFVvoK6NBtI_t9bmICJh6WSr2l5ZKv72Yq-Fi2cTDErtfUWIQuoVBAOZg6K4lrH8UHQp7CX-IkdZ1bOpo5mdndv0TBaEdofou6IlqfR6Na9oEGetDkNfNJrZ/s0/Karlson2030.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "KARLSON 2030 – Ein visionäres Bild, das Zukunft und Gegenwart in einem explosiven Zusammenspiel vereint. Abstrakte Formen und leuchtende Farben malen eine dystopische Landschaft, in der Technik und Menschlichkeit in einem kühnen Dialog miteinander verschmelzen – eine fesselnde Prophezeiung." },
+                { "Name des Werkes": "INFINITE DAMAGE", "Erscheinungsdatum": "2015", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "80x80cm", "Beschreibung des Bildes": "INFINITE DAMAGE Acryl auf Leinwand 80 x 80cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAxncmXYRFyJ9RAO9LHbK0tT4iiCpf7i97dtcNLRcQXIF67KpM2HdAcqrnvzwrSCdEJAP9XZmN_NThSAOZB6KuPArITMO4Z3A6ZgtvpeT_fXEkwtv5dexZnTNtY3J60G-zu3yTkwfSpjiq/s320/ifinite-damage.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjAxncmXYRFyJ9RAO9LHbK0tT4iiCpf7i97dtcNLRcQXIF67KpM2HdAcqrnvzwrSCdEJAP9XZmN_NThSAOZB6KuPArITMO4Z3A6ZgtvpeT_fXEkwtv5dexZnTNtY3J60G-zu3yTkwfSpjiq/s0/ifinite-damage.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "INFINITE DAMAGE – Dieses Werk ist ein eindrucksvoller Blick in die Zerbrechlichkeit moderner Existenz. Mit intensiven Farbschichten und fragmentierten Formen stellt es die Narben des Lebens dar, während es zugleich die unermessliche Schönheit des zerstörerischen Chaos in einem unverwechselbaren Dialog von Kraft und Verletzlichkeit offenbart." },
+                { "Name des Werkes": "COLOURHITCH", "Erscheinungsdatum": "2014", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "COLOURHITCH (2014) Acryl auf Leinwand 70 x 50cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPWenGnsWPmEM6Q7GZ_H-LpWqZm4DKMOaDt29EWJaO0_HULDm_jUuBQvu-en5KhzAnwFBJanA1RdYVRa2so1HNt3h2bPpnXuaUUjjVYHct8NyWejlxv8eVcptV_8WUTxDwpEexaLFE2YoH/s320/colourhitch.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhPWenGnsWPmEM6Q7GZ_H-LpWqZm4DKMOaDt29EWJaO0_HULDm_jUuBQvu-en5KhzAnwFBJanA1RdYVRa2so1HNt3h2bPpnXuaUUjjVYHct8NyWejlxv8eVcptV_8WUTxDwpEexaLFE2YoH/s0/colourhitch.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "COLOURHITCH – Ein faszinierendes Zusammenspiel von Licht, Schatten und Farbe, das in feinen Nuancen die Emotionen einer flüchtigen Begegnung widerspiegelt. Die dynamische Komposition entfaltet eine fast hypnotische Wirkung, die den Betrachter in ein kaleidoskopisches Abenteuer der Sinne entführt." },
+                { "Name des Werkes": "FLASCHENGEIST", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "FLASCHENGEIST (2013) Acryl auf Leinwand 70 x 50 cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhX5AAd_vpmWQW-2igQoenMNqUjy2OvhGEQLyHzqdW9-eslELlq8IAsNbskD6WSQO5-bHSo1MhE6Yj8ABJQEA_HzH2AqRl1P5vFbNmCLvRpRgUhmD24FXYfYNcREsIzbE49sUMrCONz3fj6/s320/DSC_0178.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhX5AAd_vpmWQW-2igQoenMNqUjy2OvhGEQLyHzqdW9-eslELlq8IAsNbskD6WSQO5-bHSo1MhE6Yj8ABJQEA_HzH2AqRl1P5vFbNmCLvRpRgUhmD24FXYfYNcREsIzbE49sUMrCONz3fj6/s0/DSC_0178.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "FLASCHENGEIST – Dieses Werk strahlt eine geheimnisvolle Aura aus, in der schimmernde Farbverläufe und impressionistische Striche eine fast geisterhafte Melodie spielen. Es fängt den flüchtigen Hauch vergangener Träume ein und öffnet einen Raum, in dem Erinnerung und Vergessen untrennbar miteinander verwoben sind." },
+                { "Name des Werkes": "ELVIS", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "ELVIS Acryl auf Leinwand 70 x 50cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhj5q3OtcI8uikJ_z-CrthEVIOzIMDMooAO_xotQ7AOr03A6gW8pQFuK0zOvGztvzmBLvcIlp01af3FuYPfQ2cn6LRNMTQiHh04wLg7RaR7pC5cNVuASax_pUlpubH0BqbtvKLaZrevMJjF/s320/Elvis.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhj5q3OtcI8uikJ_z-CrthEVIOzIMDMooAO_xotQ7AOr03A6gW8pQFuK0zOvGztvzmBLvcIlp01af3FuYPfQ2cn6LRNMTQiHh04wLg7RaR7pC5cNVuASax_pUlpubH0BqbtvKLaZrevMJjF/s0/Elvis.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "ELVIS – Ein kraftvolles Porträt, das den Geist einer Ära einfängt und in zeitgenössischen Strichen neu interpretiert. Die dynamische Verbindung von klassischen und modernen Elementen verleiht diesem Werk eine nostalgische Intensität, die den Betrachter in eine Welt voller Musik, Mythos und Emotion entführt." },
+                { "Name des Werkes": "JADEDRACHEN", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "100x100cm", "Beschreibung des Bildes": "Acryl auf Leinwand 100 x 100cm JADEDRACHEN", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQdktEedFqfYn_6n7UuncpYvhjto0goecbCya08c9-R6QMnRS0kE2_fVEuRXNDH85yaWLRNJgCP8yHvPKnT3A4u96itOtYieLmSLTmGGhjqYrLqjYYsHS5SZyv4eeqG7-b6IH5ls5mC0XY/s320/Jadedragon.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiQdktEedFqfYn_6n7UuncpYvhjto0goecbCya08c9-R6QMnRS0kE2_fVEuRXNDH85yaWLRNJgCP8yHvPKnT3A4u96itOtYieLmSLTmGGhjqYrLqjYYsHS5SZyv4eeqG7-b6IH5ls5mC0XY/s0/Jadedragon.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "JADEDRACHEN – Ein mythisches Meisterwerk, das in satten, jadegrünen Tönen die Geheimnisse fernöstlicher Legenden offenbart. Harmonische Formen und elegante Linien verweben sich zu einem visuell fesselnden Mythos, der den Betrachter in eine Welt zeitloser Symbolik und erhabener Mystik entführt." },
+                { "Name des Werkes": "DREIERLEI", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "30x70cm", "Beschreibung des Bildes": "Acryl auf Leinwand 30x70cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiBM0GVU_KZuyBsstNu6c36GggR2RSL8DRTmU4R7XsC55t-PfGtp0Bc7r8h3bOO9XoOlwQeBfLn5PWCnxnVHacjfNGcWndW0vB6UBuQrm9_caQ-Ex3AaqcfieGq_a1SJ-hRGhLYRgI9uPMg/s320/Dreierlei.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiBM0GVU_KZuyBsstNu6c36GggR2RSL8DRTmU4R7XsC55t-PfGtp0Bc7r8h3bOO9XoOlwQeBfLn5PWCnxnVHacjfNGcWndW0vB6UBuQrm9_caQ-Ex3AaqcfieGq_a1SJ-hRGhLYRgI9uPMg/s0/Dreierlei.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "DREIERLEI – Dieses Werk besticht durch eine ungewöhnliche Dreiteilung, in der kontrastierende Linien und Formen zu einem rhythmischen Ganzen verschmelzen. Jeder Abschnitt erzählt seine eigene Geschichte, und gemeinsam entsteht ein facettenreiches Mosaik, das den Betrachter zur intensiven Auseinandersetzung mit der visuellen Sprache einlädt." },
+                { "Name des Werkes": "DEDEKTIV", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "70 x 50 cm DEDEKTIV Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjLurA42gp35Syk_tKVN8ctRUxLV_nU5pdmahbIN4b686QGugGeFh-nX20AmNCZg7VfI-B4c5oYgChTbW69nlufIkklVAj8sAiXir8sWVFyqmESsEzTwNtXUdunGWRBNNoEZMSv614o-W21/s320/Dedektiv.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjLurA42gp35Syk_tKVN8ctRUxLV_nU5pdmahbIN4b686QGugGeFh-nX20AmNCZg7VfI-B4c5oYgChTbW69nlufIkklVAj8sAiXir8sWVFyqmESsEzTwNtXUdunGWRBNNoEZMSv614o-W21/s0/Dedektiv.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "DEDEKTIV – Ein düsteres Mosaik aus Schatten und Licht, das an die geheimnisvollen Ermittlungen vergangener Zeiten erinnert. Präzise Linien und scharfe Kontraste enthüllen subtil verborgene Geschichten, während die Komposition den Betrachter auffordert, den Spuren des Unsichtbaren nachzuspüren." },
+                { "Name des Werkes": "WERWOLF", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "Acryl auf Leinwand 70 x 50 cm WERWOLF Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiELFvzem37nIvdJE5YhvXqcoKpesZtNb5AZREhQCqTZ7hfMmFNX1Tuudr7cUle5C-dISQDulKbP0t9ikyLutIdsk9i_rIkgumQrgr9khk3pU7AIwMPnZf4MLvGUU8YaPyZFuno8tIuOtQ6/s320/Werwolf.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiELFvzem37nIvdJE5YhvXqcoKpesZtNb5AZREhQCqTZ7hfMmFNX1Tuudr7cUle5C-dISQDulKbP0t9ikyLutIdsk9i_rIkgumQrgr9khk3pU7AIwMPnZf4MLvGUU8YaPyZFuno8tIuOtQ6/s0/Werwolf.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "WERWOLF – Dieses Werk entfesselt den Mythos des Werwolfs mit intensiven, pulsierenden Strichen. Die aggressive Farbigkeit und dynamische Komposition vermitteln ein Gefühl von Wildheit und Unberechenbarkeit, das den Betrachter in einen faszinierenden Tanz zwischen Menschlichkeit und animalischer Urkraft entführt." },
+                { "Name des Werkes": "NUKEKÄPPCHEN", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "Acryl auf Leinwand 70 x 50 cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj1974Nx5zltsD0RdTAyUMh7HtBC281Hxxl9b0uYXs6Z4xxBdCeKwh4o0dN8u7DXgROgTtjluR7l4phKITAl7SAbxgtPw_8qzzrir2uyFYtSxz-HYVweBdfvrSojuIlkg_D6v5LIvf-Jd6J/s320/NUKEK%C3%84PPCHEN.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj1974Nx5zltsD0RdTAyUMh7HtBC281Hxxl9b0uYXs6Z4xxBdCeKwh4o0dN8u7DXgROgTtjluR7l4phKITAl7SAbxgtPw_8qzzrir2uyFYtSxz-HYVweBdfvrSojuIlkg_D6v5LIvf-Jd6J/s0/NUKEK%C3%84PPCHEN.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "NUKEKÄPPCHEN – Ein provokantes und subversives Werk, das mit explosiven Farbtupfern und schelmisch abstrakten Formen den Betrachter herausfordert. Es durchbricht konventionelle Ästhetik und eröffnet einen neuen Blickwinkel auf das Spannungsfeld zwischen Zerstörung und kreativer Befreiung." },
+                { "Name des Werkes": "CHILD", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "Acryl auf Leinwand 70 x 50 cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTpLVHzqaEF-l9OT5jexvnbQGYC-erfK0_O-dkM2TmYrPVpZWEVX2dpSQEtKnDR8y0K9SoaKLcY9PXzt-cq0d9-hhOYppqTPl259vFF6W_rDfHFxNNj3BNBaxIwWv9Pubi8ujBGaFpdW7i/s320/confusion.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiTpLVHzqaEF-l9OT5jexvnbQGYC-erfK0_O-dkM2TmYrPVpZWEVX2dpSQEtKnDR8y0K9SoaKLcY9PXzt-cq0d9-hhOYppqTPl259vFF6W_rDfHFxNNj3BNBaxIwWv9Pubi8ujBGaFpdW7i/s0/confusion.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "CHILD – Ein zartes Zeugnis kindlicher Unschuld und unerschütterlicher Neugier. Sanfte, fließende Pinselstriche und subtile Farbverläufe zeichnen ein Bild, das in seiner Reduktion pure Emotion und die unverfälschte Magie des Anfangs einfängt – ein poetischer Blick auf die Welt der Kindheit." },
+                { "Name des Werkes": "GEIST", "Erscheinungsdatum": "2011", "Kunstform": "Aquarell auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "Aquarerll auf Leinwand 70 x 50 cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbhg0Hb8to9GT1CM9Fpym0XO8iOODHsCHndNM0atvPSRvRp6JGwAIHwkZbZNXMXgtPZZjDvOdH9cJnrs7GYK1MGe4FUDKJ2Ku2yjDyEN4QfMkB2700DorZCTPT2Tj_3u_MR7q628Yq8NM4/s320/geist.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjbhg0Hb8to9GT1CM9Fpym0XO8iOODHsCHndNM0atvPSRvRp6JGwAIHwkZbZNXMXgtPZZjDvOdH9cJnrs7GYK1MGe4FUDKJ2Ku2yjDyEN4QfMkB2700DorZCTPT2Tj_3u_MR7q628Yq8NM4/s0/geist.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "GEIST – Ein feines Aquarell, das die unsichtbaren Schwingungen der Seele einfängt. Zarte, fließende Linien und sanfte Farbverläufe erzeugen eine fast meditative Atmosphäre, in der die Grenzen zwischen Erinnerung und Traum sanft verschwimmen und den Betrachter in eine andere Welt entführen." },
+                { "Name des Werkes": "ZEITENWÄCHTER", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "Acryl auf Leinwand 70 x 50cm ZEITENWÄCHTER, ", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjiXgxn2xvE5NewMT3scIOIV6R-xmK_ATlsubMhWEH41bVnaH_g93GCv1SinYHBxtQo7t1HIIyYHkMQlekTrZMepnuvLBlDNpNmkNQXg30ZpTZ-ZoFijhjjxCIYXyhl2HNaf8tXyW0bbCPb/s320/Zeitenw%C3%A4chter.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjiXgxn2xvE5NewMT3scIOIV6R-xmK_ATlsubMhWEH41bVnaH_g93GCv1SinYHBxtQo7t1HIIyYHkMQlekTrZMepnuvLBlDNpNmkNQXg30ZpTZ-ZoFijhjjxCIYXyhl2HNaf8tXyW0bbCPb/s0/Zeitenw%C3%A4chter.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "ZEITENWÄCHTER – Ein meditativer Blick auf den Fluss der Zeit, festgehalten in dynamischen Pinselstrichen. Das Werk wirkt wie ein stiller Wächter, der vergangene Epochen bewahrt und in jedem Strich die Vergänglichkeit und den ewigen Puls der Gegenwart zum Ausdruck bringt." },
+                { "Name des Werkes": "DOG OF STEEL", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "Acryl auf Leinwand 70 x 50 cm DOG OF STEEL Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiW16VvmTMjIKta4zkspx1eii8wZ098KVishrzKOTIQ_JPUPrhssWL96FDQQmbfd-X2KaOlyVktXWnssJmLH15AIuLR-l-uLyg1Mzi6DzdGJeHMc9uMItceYnP3jQXX6dwiDPRyWqa7Owma/s320/Dogofsteel.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiW16VvmTMjIKta4zkspx1eii8wZ098KVishrzKOTIQ_JPUPrhssWL96FDQQmbfd-X2KaOlyVktXWnssJmLH15AIuLR-l-uLyg1Mzi6DzdGJeHMc9uMItceYnP3jQXX6dwiDPRyWqa7Owma/s0/Dogofsteel.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "DOG OF STEEL – Ein kraftvolles Porträt, das die unerschütterliche Stärke und moderne Ästhetik eines metallischen Begleiters verkörpert. Klare Linien und kühle Farbtöne kreieren ein Bild, das sowohl als Symbol des Schutzes als auch als rebellischer Ausdruck zeitgenössischer Urbanität fasziniert." },
+                { "Name des Werkes": "BLOW", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "Acryl auf Leinwand 70 x 50 cm Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg-jz_nT7j7ps4D4EPRBw0iLOfX-ZLayaEPebqNydtH_NZnfWZPXp7cz29agfyHWV84Vcy-9BS3cv-ZiHTWsIrX9R7MOtcLhkJ_CmlagaGVy503iMGDWn7PEmIYe-dY90fEHXLjoRdUSiDb/s320/BLOW.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg-jz_nT7j7ps4D4EPRBw0iLOfX-ZLayaEPebqNydtH_NZnfWZPXp7cz29agfyHWV84Vcy-9BS3cv-ZiHTWsIrX9R7MOtcLhkJ_CmlagaGVy503iMGDWn7PEmIYe-dY90fEHXLjoRdUSiDb/s0/BLOW.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "BLOW – Ein energetischer Ausbruch, der in dynamischen Pinselstrichen und lebendigen Farbtupfern den Moment der Befreiung feiert. Dieses Werk fängt den Augenblick explosiver Kreativität ein und hinterlässt einen bleibenden Eindruck von Bewegung und emotionaler Intensität, der den Betrachter mitreißt." },
+                { "Name des Werkes": "DEEP END", "Erscheinungsdatum": "2012", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "DEEP END Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyomY8opX7PbCN4uYHndGX7yp1LEtxDUEjeQJoUrDKLMeuyMlhFTc0CtCce82qWvMFL0KHCXbtoQtkN1C5ME5Fzzr26GrIASSOP5341G287mK0krAvUBa18cxvT8nG4WTPcF6xCx5A79pH/s320/verh%C3%A4ngnissvoll.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjyomY8opX7PbCN4uYHndGX7yp1LEtxDUEjeQJoUrDKLMeuyMlhFTc0CtCce82qWvMFL0KHCXbtoQtkN1C5ME5Fzzr26GrIASSOP5341G287mK0krAvUBa18cxvT8nG4WTPcF6xCx5A79pH/s0/verh%C3%A4ngnissvoll.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "DEEP END – Dieses Werk zieht den Betrachter in die unendliche Tiefe, wo sich Licht und Dunkelheit in einem faszinierenden Zusammenspiel begegnen. Die kraftvollen Pinselstriche erschaffen eine fast hypnotische Unterwasserwelt, in der Emotionen und Geheimnisse in schillernden Farbnuancen miteinander verschmelzen." },
+                { "Name des Werkes": "KAMPF DER ELEMENTE", "Erscheinungsdatum": "2012", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "70x50cm", "Beschreibung des Bildes": "Acryl auf Leinwand 70 x 50 cm KAMPF DER ELEMETE Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEillOgKs76pHQY04h9CmnlUDzCnV-XLR5_7vSiDgEn7DXRLGCo6nCmSuw8p_OMseDyXvf9lUfnIWlJ2IryAnuIez0f6-9aNMT3E1RSLxLO_TcJZiqMGX0BPjhBnENJXAvXCLdUvDWtnEbXY/s320/Kampf+der+elemente.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEillOgKs76pHQY04h9CmnlUDzCnV-XLR5_7vSiDgEn7DXRLGCo6nCmSuw8p_OMseDyXvf9lUfnIWlJ2IryAnuIez0f6-9aNMT3E1RSLxLO_TcJZiqMGX0BPjhBnENJXAvXCLdUvDWtnEbXY/s0/Kampf+der+elemente.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "KAMPF DER ELEMENTE – Ein epischer Zusammenprall der Naturkräfte: Feuer, Wasser, Luft und Erde treten in einem intensiven Dialog gegeneinander an. Explosive Farben und kraftvolle Strichführung lassen den ewigen Wettstreit der Elemente lebendig werden und bieten einen tiefgründigen Blick in die Urkraft der Natur." },
+                { "Name des Werkes": "AUF HOHER SEE", "Erscheinungsdatum": "2012", "Kunstform": "Acryl auf Hartfaserplatte", "Formatgröße": "80x100cm", "Beschreibung des Bildes": "AUF HOHER SEE Acryl auf Hartfaserplatte 80 x 100 cm  !!!> GESTOHLEN <!!!", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikChP0H0cQkEGisjq4Kq7cjXoN53doA2-VyEe8Ui4DTZBD8RYZPs70rrACYYaknrpKSOBk1W-biLBCrs75vi4ia3rHwjnjZRgxvVl48ZpSm2ftb85F6XBYPEHpb8eOfF2dc2VjfLFAFugK/s320/Auf+hoher+see.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEikChP0H0cQkEGisjq4Kq7cjXoN53doA2-VyEe8Ui4DTZBD8RYZPs70rrACYYaknrpKSOBk1W-biLBCrs75vi4ia3rHwjnjZRgxvVl48ZpSm2ftb85F6XBYPEHpb8eOfF2dc2VjfLFAFugK/s0/Auf+hoher+see.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "AUF HOHER SEE – Ein maritimes Epos, das die unendliche Weite des Ozeans in kraftvollen, wellenartigen Strichen einfängt. Kühles Blau und dramatische Farbkontraste vermitteln die melancholische Sehnsucht nach Freiheit, während die abstrakte Komposition den endlosen Dialog zwischen Meer und Horizont poetisch erzählt." },
+                { "Name des Werkes": "STUMMER INDIANER", "Erscheinungsdatum": "2012", "Kunstform": "Acryl auf Hartfaserplatte", "Formatgröße": "80x100cm", "Beschreibung des Bildes":  "STUMMER INDIANER Acryl auf Hartfaserplatte 80 x 100 cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgr61K0tfs8YhN7XgzkxDuMw1_Q1zEiiUPfJoswoLMoEjaWke_2QwqqfUD_8jRpYVcOR5pAXHEIUakwTWPX16mXDXh6ePYClPChv2zC6wMow3c9zFpKD9hrPe08mUE-49vxXl0FnRa1xwbF/s320/Stummer+Indianer.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgr61K0tfs8YhN7XgzkxDuMw1_Q1zEiiUPfJoswoLMoEjaWke_2QwqqfUD_8jRpYVcOR5pAXHEIUakwTWPX16mXDXh6ePYClPChv2zC6wMow3c9zFpKD9hrPe08mUE-49vxXl0FnRa1xwbF/s0/Stummer+Indianer.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "STUMMER INDIANER – Ein eindringliches Porträt stiller Helden, das die melancholische Ruhe und den ungesagten Schmerz einer verlorenen Kultur einfängt. Die kontrastreichen Farbflächen und subtilen Linien schaffen einen Dialog zwischen Vergangenheit und Gegenwart, der den Geist der Tradition poetisch ehrt." },
+                { "Name des Werkes": "SAFARIA FANTASIA", "Erscheinungsdatum": "2012", "Kunstform": "Acryl", "Formatgröße": "80x100cm", "Beschreibung des Bildes":"Du kannst es drehen und wenden, die details werden nicht enden.", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijqnlMAduKw2GOe7S6mF5Vm1skXEYs2sIn69mpUprSlIp3HSFN1kd-JKRTs-OD9z_m8XfchfQjqQupzkEoU17sDS3Fo-N5mC5MOUIVJKD_EK40G57C1_2KpdJXYNUyrK1ZWN4M38H6IOO4/s320/Safaria+Fantasia.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijqnlMAduKw2GOe7S6mF5Vm1skXEYs2sIn69mpUprSlIp3HSFN1kd-JKRTs-OD9z_m8XfchfQjqQupzkEoU17sDS3Fo-N5mC5MOUIVJKD_EK40G57C1_2KpdJXYNUyrK1ZWN4M38H6IOO4/s0/Safaria+Fantasia.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "SAFARIA FANTASIA – Ein farbenfrohes Spektakel, das die exotische Atmosphäre einer ungezähmten Savanne in traumhafte Visionen überführt. Mit leuchtenden Tönen und fließenden Formen erschafft dieses Werk eine dynamische Landschaft, in der wilde Freiheit und poetische Imagination harmonisch verschmelzen." },
+                { "Name des Werkes": "MONSTER", "Erscheinungsdatum": "2012", "Kunstform": "Acryl", "Formatgröße": "100x100cm", "Beschreibung des Bildes": "MONSTER Acryl auf Hartfaserplatte 100 x 100cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9fmC5V8gjFrsei19C-0ARkIC8yqOjmcaVXuD7R0tb5lwvU8HCIY657PBfdXljeXmemk8lSID8TOpmeZIs3ku8ADSGJt9YbASUL3QA8JEPV8cElapKO2tScttBAN8dwlRRs6N7_qgDZv6U/s320/Monster.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEj9fmC5V8gjFrsei19C-0ARkIC8yqOjmcaVXuD7R0tb5lwvU8HCIY657PBfdXljeXmemk8lSID8TOpmeZIs3ku8ADSGJt9YbASUL3QA8JEPV8cElapKO2tScttBAN8dwlRRs6N7_qgDZv6U/s0/Monster.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "MONSTER – Ein imposantes Werk, das die dunklen Facetten menschlicher Emotionen und innerer Dämonen offenbart. Mit expressiven, verzerrten Formen und tiefen Farbtönen schafft es eine Atmosphäre der Faszination und des Schreckens, in der die Grenzen zwischen Realität und Albtraum verschwimmen." },
+                { "Name des Werkes": "DEVIL", "Erscheinungsdatum": "2012", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "80x100cm", "Beschreibung des Bildes": "80 x 100 cm (EXPLOSION) Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYFfflgj0BUq4qdxvwMdJJY8HuRX_aVEUm4qOuraxhgEkmrWGM9Nm8_Vmellq18Qxbk9qjTdY3uvsSzHXagm2TiQ9xWm-iYISBGI3CzwNmER5CGucTXtb8GM_GsKJvzhCo3DlIJSN8ln2p/s320/Devil.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjYFfflgj0BUq4qdxvwMdJJY8HuRX_aVEUm4qOuraxhgEkmrWGM9Nm8_Vmellq18Qxbk9qjTdY3uvsSzHXagm2TiQ9xWm-iYISBGI3CzwNmER5CGucTXtb8GM_GsKJvzhCo3DlIJSN8ln2p/s0/Devil.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "DEVIL – Ein düster-provokantes Werk, das die Ambivalenz des Bösen in eindrucksvollen Farbspritzern und dynamischen Formen verkörpert. Die explosive Darstellung fordert den Betrachter heraus, sich mit seinen eigenen Schatten auseinanderzusetzen und die mystische Kraft des Unbekannten zu erkennen." },
+                { "Name des Werkes": "KWAL DER WAL", "Erscheinungsdatum": "2011", "Kunstform": "Acryl auf Hartfaserplatte, Kombination", "Formatgröße": "80x80cm", "Beschreibung des Bildes": "Acryl auf Leinwand 80 x 80 cm, Er ist Teil des Baumes.", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtCvlF8CTVklO93kxwMbR7oMbJJN7WZVRco1_V1-NUQAWY6QLSnUgoCa2KUsUfxx531M4Tchxu4rtztmJSGne8vJM-VoBCoG_zoKVCdLcLf9XovLB6zO5boSfgb0jI2lp0HTpU_OUVTllI/s320/Kwal+der+wal.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgtCvlF8CTVklO93kxwMbR7oMbJJN7WZVRco1_V1-NUQAWY6QLSnUgoCa2KUsUfxx531M4Tchxu4rtztmJSGne8vJM-VoBCoG_zoKVCdLcLf9XovLB6zO5boSfgb0jI2lp0HTpU_OUVTllI/s0/Kwal+der+wal.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/werke.html", "Ursprungs_Post_Titel": "WERKE", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "KWAL DER WAL – Ein majestätisches Bild, das die erhabene Kraft und Eleganz eines Wals in seiner natürlichen Pracht darstellt. Harmonische Blautöne und fließende Pinselstriche verleihen diesem Werk eine fast mythische Dimension, in der die Größe der Natur poetisch zelebriert wird." },
+                { "Name des Werkes": "MOONKEY", "Erscheinungsdatum": "2015", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "100x100cm", "Beschreibung des Bildes": "MOONKEY: Immer auf der suche nach was neuem!", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEidb7i6TMDCw7KUnF3w8JwoxDcf9R9GSVetyK_T4V3Kn9iTMcGB3W1TwLBwNG50K5k7UoEeO4eFwbRCaZYk5iC5JFi1r_V4acsuihTg2C4NEPOWR8bIgTiOqh7mEoLFVS6RYmVdbTnEPMre/s320/Moonkey.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEidb7i6TMDCw7KUnF3w8JwoxDcf9R9GSVetyK_T4V3Kn9iTMcGB3W1TwLBwNG50K5k7UoEeO4eFwbRCaZYk5iC5JFi1r_V4acsuihTg2C4NEPOWR8bIgTiOqh7mEoLFVS6RYmVdbTnEPMre/s0/Moonkey.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "MOONKEY – Ein verspielter Ausbruch künstlerischer Innovation, der den unbändigen Drang nach Neuem einfängt. Mit lebendigen, fließenden Formen und einem Hauch von Ironie öffnet dieses Werk Türen zu unkonventionellen Welten, in denen Kreativität und Humor Hand in Hand gehen." },
+                { "Name des Werkes": "PROMETHEUS", "Erscheinungsdatum": "2012", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "100x100cm", "Beschreibung des Bildes": "Mögen sie sich an ihm laben, doch kann es ihn nie brechen!", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8zWbs8Ak0UYmAMb6HVMThyphenhyphenGA_b0-MhnmnZl7vqdrl54tOI8nyJifV5lSCNQMQesWROFV-XFVsJbPSr1qjFP5vm-iDATcKjulTyOSKDaVmirqZEIJdDeJiEiKkPoeJnNX5altpTrEvAbQI/s320/Prometheus.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg8zWbs8Ak0UYmAMb6HVMThyphenhyphenGA_b0-MhnmnZl7vqdrl54tOI8nyJifV5lSCNQMQesWROFV-XFVsJbPSr1qjFP5vm-iDATcKjulTyOSKDaVmirqZEIJdDeJiEiKkPoeJnNX5altpTrEvAbQI/s0/Prometheus.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "PROMETHEUS – Ein kraftvolles Symbol des Strebens und der Rebellion, das in feurigen Pinselstrichen und dramatischen Farbexplosionen die Tragödie und den Triumph einer mythischen Figur zum Ausdruck bringt. Dieses Werk entfacht das Feuer der Erkenntnis in jeder Linie." },
+                { "Name des Werkes": "SAGENZEUGNIS", "Erscheinungsdatum": "2011", "Kunstform": "Acryl auf Hartfaserplatte", "Formatgröße": "100x100cm", "Beschreibung des Bildes": "SAGENZEUGNIS: Er trifft die Zeit im Wandel, doch vermag nicht zu handeln", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhIN85AEG8WWxlSudfnCgu6zY9MAaXfW8sliNe3Od-vI-ndWislKarpQcxk5zTjhear8ZH3_Qe01mdP1_nZG58rVgvf77LUFoCehJfTx5yD_oS2DWsa1e96YnhIRzqd6SB4JQN35UMWzSu0/s320/sagenzeugnis.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhIN85AEG8WWxlSudfnCgu6zY9MAaXfW8sliNe3Od-vI-ndWislKarpQcxk5zTjhear8ZH3_Qe01mdP1_nZG58rVgvf77LUFoCehJfTx5yD_oS2DWsa1e96YnhIRzqd6SB4JQN35UMWzSu0/s0/sagenzeugnis.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": "2012", "Kuratorischer Beschreibungstext": "SAGENZEUGNIS – Ein eindringliches Zeugnis des Wandels, das die vergängliche Schönheit und den Schmerz der Zeit in ausdrucksstarken Pinselstrichen festhält. Jede Linie erzählt von ungesagten Erinnerungen und der tiefen Melancholie, die in der Vergänglichkeit des Lebens mitschwingt." },
+                { "Name des Werkes": "BURNING LAND", "Erscheinungsdatum": "2015", "Kunstform": "Acryl/Kreide auf Hartfaserplatte", "Formatgröße": "100x100cm", "Beschreibung des Bildes": "Acryl/Kreide auf Hartfaserplatte 100 x 100 cm BURNING LAND", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZ0FP5ZUfXyivDYpy_vQ610JJ0zTP8vJuMc63duOppSYCya7HmFPEXi2il_guHetk0E9BFcqqxcR4G4uqKn8rp2mgs-bpk56-_JMCQZ9emybaDzyHtEdgeJc26I1Z8O1RoEG8kfya0R9fs/s320/burningland.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZ0FP5ZUfXyivDYpy_vQ610JJ0zTP8vJuMc63duOppSYCya7HmFPEXi2il_guHetk0E9BFcqqxcR4G4uqKn8rp2mgs-bpk56-_JMCQZ9emybaDzyHtEdgeJc26I1Z8O1RoEG8kfya0R9fs/s0/burningland.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "BURNING LAND – Ein feuriges Epos, das die zerstörerische Hitze und zugleich die reinigende Kraft des Feuers in intensiven, fließenden Pinselstrichen einfängt. Dieses Werk lässt den Betrachter den erbitterten Kampf zwischen Zerstörung und Erneuerung spüren und entfacht ein Feuer der Emotionen." },
+                { "Name des Werkes": "WOLLUST", "Erscheinungsdatum": "2010", "Kunstform": "Acryl auf Hartfaserplatte", "Formatgröße": "70x140cm", "Beschreibung des Bildes": "Acryl auf Hartfaserplatte 70 x 140cm !!!> GESTOHLEN <!!! ", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi4Zp3HXi4_iae-8cKstASahXi19JyROKyUgMPW3IXhnZWU__S7I5WqG_6Tv9vnIMlhnr946hMqORGLweTowyHeRF-SBIjftc0baw3rqQn9w4blaUeRG1uNxdJz-xyBduMmZb8FH1i1b1V3/s320/DSC_0177.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEi4Zp3HXi4_iae-8cKstASahXi19JyROKyUgMPW3IXhnZWU__S7I5WqG_6Tv9vnIMlhnr946hMqORGLweTowyHeRF-SBIjftc0baw3rqQn9w4blaUeRG1uNxdJz-xyBduMmZb8FH1i1b1V3/s0/DSC_0177.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": "2015", "Kuratorischer Beschreibungstext": "WOLLUST – Ein verführerisches Spiel aus intensiven Farben und geschwungenen Formen, das die Sinnlichkeit und das unbändige Verlangen des Augenblicks einfängt. Dieses Werk strahlt eine hypnotische Anziehungskraft aus, die den Betrachter in einen Strudel aus Leidenschaft und künstlerischer Ekstase entführt." },
+                { "Name des Werkes": "MASSENTIERHALTUNG", "Erscheinungsdatum": "2010", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "100x100cm", "Beschreibung des Bildes": "Es lebt vom Tod der anderen!", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgCeLIClx4_FVRtrsFoZ6zWRhi0XPSbqWYW7QT3Jou1ika1rx-7g_v2l_aK2El4jnx_BQyGLAXFCVGokO8XOTa6ZoyPemITy5P_aTuu_x6vec5OytdTpkQ2I3A6SHvh4aw9iBqgF9F56033/s320/massentierhaltung.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgCeLIClx4_FVRtrsFoZ6zWRhi0XPSbqWYW7QT3Jou1ika1rx-7g_v2l_aK2El4jnx_BQyGLAXFCVGokO8XOTa6ZoyPemITy5P_aTuu_x6vec5OytdTpkQ2I3A6SHvh4aw9iBqgF9F56033/s0/massentierhaltung.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "MASSENTIERHALTUNG – Ein erschütterndes Bild, das die brutale Realität industrieller Tierhaltung in abstrakter Form eindrucksvoll dokumentiert. Die harten, kontrastreichen Pinselstriche und düsteren Farbtöne erzählen von Unterdrückung und Leid, während sie den Betrachter zum kritischen Nachdenken über unser System anregen." },
+                { "Name des Werkes": "LAUF DER DINGE", "Erscheinungsdatum": "2013", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "100x100cm", "Beschreibung des Bildes": "ALONALITÄLONADA, LAUF DER DINGE, Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvUcA-KF0gGPYhI-lxe1gihLiyPf6hg_7ogkYI7AdevUdxfY8u4DN0KKf3wTLq6jNgd8hv3lRx8SxofSEcqucAE2HOZTL7K4DLkmuSBYsPIg7qOkFHF6shLQjHt7-yT7jb4sb7FAQ3m3FB/s320/LAUF+DER+DINGE.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjvUcA-KF0gGPYhI-lxe1gihLiyPf6hg_7ogkYI7AdevUdxfY8u4DN0KKf3wTLq6jNgd8hv3lRx8SxofSEcqucAE2HOZTL7K4DLkmuSBYsPIg7qOkFHF6shLQjHt7-yT7jb4sb7FAQ3m3FB/s0/LAUF+DER+DINGE.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "LAUF DER DINGE – Dieses Werk wirkt wie ein flüchtiger Tanz aus Schatten und Licht. Die abstrakten Formen und dynamischen Linien verleihen der Komposition einen rhythmischen Puls, der den Betrachter dazu einlädt, den fließenden Dialog zwischen Bewegung und Stillstand zu erforschen." },
+                { "Name des Werkes": "SAVE THE OZEAN", "Erscheinungsdatum": "2012", "Kunstform": "Acryl auf Hartfaserplatte", "Formatgröße": "100x100cm", "Beschreibung des Bildes": "Acryl auf Hartfaserplatte 100 x 100 cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiaZgd2g4VBjOo6RIiaHQ4OcT4rj0VotiDKf2yfa-Vv_s87UjoVnBCHmSi996Ly49mKCGHOJQw6Hi_adkKBb8JAQh0RlrXGoEnZ-P9X3UCHB26dVVZgvI7Rwz0YehvfUVkD4l96drpft5j3/s320/SAVE+THE+OZEAN.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiaZgd2g4VBjOo6RIiaHQ4OcT4rj0VotiDKf2yfa-Vv_s87UjoVnBCHmSi996Ly49mKCGHOJQw6Hi_adkKBb8JAQh0RlrXGoEnZ-P9X3UCHB26dVVZgvI7Rwz0YehvfUVkD4l96drpft5j3/s0/SAVE+THE+OZEAN.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "SAVE THE OZEAN – Ein eindringlicher Appell, der in tiefen Blautönen und kraftvollen Strichen die unendliche Weite und zugleich die Zerbrechlichkeit der Meere zelebriert. Die Komposition ruft das Rauschen der Brandung und den ständigen Wandel der Gezeiten hervor." },
+                { "Name des Werkes": "STADT", "Erscheinungsdatum": "2012", "Kunstform": "Acryl auf Hartfaserplatte", "Formatgröße": "150x80cm", "Beschreibung des Bildes": "STADT Acryl auf Hartfaserplatte gerahmt 150 x 80 cm", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjK8yYCnc3aRNEG9UUv7ztzX0F1VrR52o5LDYUvJ7P6mWjyIIl7DXzWk321J0VDQxSLtWc0niNXgaEk-jGWiJmRQr8Cri_gEu8GPGGO0ug0DbS7rjDcnWJGABQwbk9r1MTrEyFpIbzW0YbV/s320/Stadt.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjK8yYCnc3aRNEG9UUv7ztzX0F1VrR52o5LDYUvJ7P6mWjyIIl7DXzWk321J0VDQxSLtWc0niNXgaEk-jGWiJmRQr8Cri_gEu8GPGGO0ug0DbS7rjDcnWJGABQwbk9r1MTrEyFpIbzW0YbV/s0/Stadt.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "STADT – Ein urbanes Porträt, das die pulsierende Dynamik und den rauen Charme moderner Metropolen einfängt. Mit scharfen Kontrasten und klaren Linien bildet dieses Werk ein Mosaik aus Architektur und Leben, das den unablässigen Rhythmus der Stadt poetisch reflektiert." },
+                { "Name des Werkes": "COULERFULL MESS", "Erscheinungsdatum": "2012", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "150x100cm", "Beschreibung des Bildes": "Acryl auf Leinwand 150 x 100 cm COULERFULL MESS Acryl auf Leinwand", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgPQLcSSPuE0i_eag3xpYJEEZhGcfjy-ZVdwsxJ-qDy2T687UC9YmopxMiCA1GzycB2xSmcJk9UoEWYADMeus9QwgkdysQdnDWIrsWuNaVW82MZJk09INCfBIGe3EdWY-JkiLQCtxy-N1E8/s320/coulerfull+mess.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgPQLcSSPuE0i_eag3xpYJEEZhGcfjy-ZVdwsxJ-qDy2T687UC9YmopxMiCA1GzycB2xSmcJk9UoEWYADMeus9QwgkdysQdnDWIrsWuNaVW82MZJk09INCfBIGe3EdWY-JkiLQCtxy-N1E8/s0/coulerfull+mess.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "COULERFULL MESS – Ein farbenprächtiges Durcheinander, das in abstrahierter Form den urbanen Puls und die ungezähmte Dynamik moderner Großstädte einfängt. Explosive Farbspritzer und expressive Strichführung erzeugen ein visuelles Gedicht, das den Betrachter in eine Welt voller Bewegung und Intensität entführt." },
+                { "Name des Werkes": "JUSTITIA", "Erscheinungsdatum": "2012", "Kunstform": "Acryl auf Leinwand", "Formatgröße": "150x100cm", "Beschreibung des Bildes": "Acryl auf Leinwand 150 x 100 cm JUSTITIA", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg26iBWJTzu0AS35QBb8uWNwMizJI8u7xmdhZo5ygQ5vyZn8HewkqyaXhyphenhyphenYVpawszfOr9aYuJ2X1UzcnsOUFuNy9ZaI9ex0J7U3TFhuPufMwd-SlUH10sRXkEhqHAD76WRPGpZuoqrJ1Q4C/s320/justizia.JPG", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg26iBWJTzu0AS35QBb8uWNwMizJI8u7xmdhZo5ygQ5vyZn8HewkqyaXhyphenhyphenYVpawszfOr9aYuJ2X1UzcnsOUFuNy9ZaI9ex0J7U3TFhuPufMwd-SlUH10sRXkEhqHAD76WRPGpZuoqrJ1Q4C/s0/justizia.JPG", "Quell_URL": "https://karl-ulinger.blogspot.com/p/groformat-70-x-150cm.html", "Ursprungs_Post_Titel": "GROßFORMATE ab 100 x 100 cm", "Ursprungs_Post_Datum": null, "Kuratorischer Beschreibungstext": "JUSTITIA – Ein kraftvolles Symbol für Gerechtigkeit, eingefangen in kühlen, präzisen Strichen und einem ausgewogenen Farbspiel. Dieses Werk verkörpert den Anspruch an Recht und Ordnung und lädt den Betrachter dazu ein, in der strengen Harmonie von Form und Farbe die stille Autorität der Gerechtigkeit zu entdecken." },
+                { "Name des Werkes": "Vernisage karlulinger 2015", "Erscheinungsdatum": "2015", "Kunstform": "Flyer/Digital", "Formatgröße": "10x18cm", "Beschreibung des Bildes": "Flyer Design für eine Vernissage 2015.", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhk4jwp9jKlQqXZJhX-1LLGEKkQoQIOBvFROcvl2xn3RR1HNa_8QMFQk9abCRTSjLpWyxuVub4OQ6IHO14U_oGhUnZXTpvHaVEXOyy0DdqGzDqm6NPziwAKMwaT7cMfwW18r196S7172ijQ/s320/web+karlulinger.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhk4jwp9jKlQqXZJhX-1LLGEKkQoQIOBvFROcvl2xn3RR1HNa_8QMFQk9abCRTSjLpWyxuVub4OQ6IHO14U_oGhUnZXTpvHaVEXOyy0DdqGzDqm6NPziwAKMwaT7cMfwW18r196S7172ijQ/s0/web+karlulinger.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/2013/08/grun-gelb-karl-ulinger.html", "Ursprungs_Post_Titel": "GRÜN GELB KARL ULINGER", "Ursprungs_Post_Datum": "15. August 2013 um 01:24", "Kuratorischer Beschreibungstext": "Vernisage karlulinger 2015 – Ein charmanter, reduzierter Flyer, der den Geist der Ausstellung in eleganter Schlichtheit präsentiert. Klare Formen und eine dezente Farbpalette fangen die künstlerische Handschrift ein und laden den Betrachter zu einem intimen Blick in Karl Ulingers Welt der visuellen Poesie ein." },
+                { "Name des Werkes": "gewerk flyer", "Erscheinungsdatum": "2015", "Kunstform": "Flyer/Digital", "Formatgröße": "Flyer", "Beschreibung des Bildes": "Flyer-Design für Gewerk.", "Thumpnail des Bildes als link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiv9x9rDGVoGa2GIa3qQLSJMuNpUdaIOqtUlFAl-3NKCXje-Ez7aTP-F904fX0oFc_-0GYGtEVH2NQf45077TZRtmMc9oozcvWc4zDKWO4qjlyF_t82q-Nqdx7wMtdj-6lU1JEwn8ANx0lX/s320/gewerk_flyer.jpg", "Das ganze Bild als vollen roh link": "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiv9x9rDGVoGa2GIa3qQLSJMuNpUdaIOqtUlFAl-3NKCXje-Ez7aTP-F904fX0oFc_-0GYGtEVH2NQf45077TZRtmMc9oozcvWc4zDKWO4qjlyF_t82q-Nqdx7wMtdj-6lU1JEwn8ANx0lX/s0/gewerk_flyer.jpg", "Quell_URL": "https://karl-ulinger.blogspot.com/2011/06/unbenannter-container-16.html", "Ursprungs_Post_Titel": "Unbenannter Container 16", "Ursprungs_Post_Datum": "29. Juni 2011 um 15:22", "Kuratorischer Beschreibungstext": "gewerk flyer – Ein minimalistisches, prägnantes Statement, das mit schlichten Formen und klaren Linien die Essenz von Karl Ulingers Schaffen auf den Punkt bringt. Dieser Flyer lädt zum Verweilen ein und öffnet den Raum für eine intensive, persönliche Auseinandersetzung mit der Kunst." }
+             ];
+
+
+            // --- DOM Elements Cache ---
+            const galleryGrid = document.getElementById('galleryGrid');
+            const searchInput = document.getElementById('searchInput');
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const gridViewBtn = document.getElementById('gridViewBtn');
+            const listViewBtn = document.getElementById('listViewBtn');
+            const artworkModal = document.getElementById('artworkModal');
+            const modalBody = document.getElementById('modalBody');
+            const modalClose = document.getElementById('modalClose');
+            const adminButton = document.getElementById('adminButton');
+            const adminModal = document.getElementById('adminModal');
+            const adminModalClose = document.getElementById('adminModalClose');
+            const adminForm = document.getElementById('adminForm');
+            const artworkImageInput = document.getElementById('artworkImageAdmin');
+            const imagePreview = document.getElementById('imagePreview');
+            const imagePreviewContainer = document.getElementById('imagePreviewContainer');
+            const loaderContainer = document.getElementById('loader');
+            const toast = document.getElementById('toast');
+            const themeToggle = document.getElementById('themeToggle');
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const navLinks = document.getElementById('navLinks');
+            const contactForm = document.getElementById('contactForm');
+            const currentYearSpan = document.getElementById('currentYear');
+            const galleryPlaceholder = document.getElementById('gallery-placeholder');
+            const navLinkItems = document.querySelectorAll('.nav-link');
+            const body = document.body;
+            const newsGrid = document.getElementById('newsGrid');
+            const newsPlaceholder = document.getElementById('newsPlaceholder');
+
+            // --- State ---
+            let artworks = [];
+            let currentFilter = 'all';
+            let currentSearchTerm = '';
+            let isListView = false;
+
+            // --- Helper Functions ---
+            function hideLoader() { if (loaderContainer) setTimeout(() => loaderContainer.classList.add('hidden'), 200); }
+            function showToast(message, type = 'success', duration = 3500) { if (!toast) return; toast.textContent = message; toast.className = 'toast show ' + type; clearTimeout(toast.timer); toast.timer = setTimeout(() => toast.classList.remove('show'), duration); }
+            function toggleTheme() { const isDark = body.dataset.theme === 'dark'; const newTheme = isDark ? 'light' : 'dark'; body.dataset.theme = newTheme; if (themeToggle) { themeToggle.innerHTML = newTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; themeToggle.setAttribute('aria-label', newTheme === 'dark' ? 'Hellen Modus' : 'Dunklen Modus'); } localStorage.setItem('theme', newTheme); }
+            function toggleMobileMenu() { if (!navLinks || !mobileMenuBtn) return; const isActive = navLinks.classList.toggle('active'); mobileMenuBtn.innerHTML = isActive ? '<i class="fas fa-times"></i>' : '<i class="fas fa-bars"></i>'; mobileMenuBtn.setAttribute('aria-expanded', isActive); body.style.overflow = isActive ? 'hidden' : ''; }
+            function setActiveNavLink() { let currentId = 'home'; const sections = document.querySelectorAll('main section[id]'); const scrollY = window.pageYOffset; const offset = 70; sections.forEach(sec => { if (scrollY >= sec.offsetTop - offset) currentId = sec.id; }); navLinkItems.forEach(link => link.classList.toggle('active', link.getAttribute('href') === `#${currentId}`)); }
+            function debounce(func, wait) { let timeout; return (...args) => { clearTimeout(timeout); timeout = setTimeout(() => func.apply(this, args), wait); }; }
+
+            // --- DATA PROCESSING ---
+            function createArtworksFromData(rawData) {
+                return rawData.map((item, index) => {
+                    const title = item["Name des Werkes"]?.trim() || `Werk #${index + 1}`;
+                    let year = null;
+                    const dateStr = item["Erscheinungsdatum"];
+                    if (typeof dateStr === 'string') { const yearMatch = dateStr.match(/\b(19|20)\d{2}\b/); year = yearMatch ? parseInt(yearMatch[0]) : null; }
+                    else if (typeof dateStr === 'number' && dateStr > 1000) { year = dateStr; }
+
+                    const dimensions = item["Formatgröße"]?.replace('cmcm', 'cm').trim() || null;
+                    let description = item["Beschreibung des Bildes"] || '';
+                    const titleUpper = title.toUpperCase();
+                    description = description.replace(titleUpper, '').replace(/\bWEG\b/gi, '').trim();
+                     if (item["Beschreibung des Bildes"]?.includes('GESTOHLEN')) { description = (description ? description + ' ' : '') + '(Hinweis: Als gestohlen gemeldet)'; }
+                    if (!description) description = 'Keine spezifische Beschreibung verfügbar.';
+
+                    const imageThumbnail = item["Thumpnail des Bildes als link"];
+                    const imageFull = item["Das ganze Bild als vollen roh link"];
+                    const originalUrl = item["Quell_URL"] || null;
+                    const kunstformLower = (item["Kunstform"] || '').toLowerCase();
+                    const curatorialText = item["Kuratorischer Beschreibungstext"] || null;
+
+                    let category = 'andere';
+                    if (kunstformLower.includes('acryl') || kunstformLower.includes('leinwand') || kunstformLower.includes('öl') || kunstformLower.includes('hartfaserplatte')) { category = 'gemälde'; }
+                    else if (kunstformLower.includes('zeichnung') || kunstformLower.includes('aquarell')) { category = 'zeichnung'; }
+                    else if (kunstformLower.includes('digital') || kunstformLower.includes('grafik') || title.toLowerCase().includes('flyer')) { category = 'digital'; }
+                    else if (kunstformLower.includes('print') || title === "KARTOFFELDRUCK") { category = 'print'; }
+
+                    const sizeMatch = dimensions?.match(/(\d+)[xX](\d+)/);
+                    if (sizeMatch) { const w = parseInt(sizeMatch[1]), h = parseInt(sizeMatch[2]); if ((w >= 100 && h >= 100) || w >= 140 || h >= 140 || (w >= 70 && h >= 140) || (w >= 140 && h >= 70)) category = 'großformat'; }
+                    else if (title.toLowerCase().includes('großformat') || item["Ursprungs_Post_Titel"]?.toLowerCase().includes('großformat') || dimensions?.toLowerCase().includes('großformat')) { category = 'großformat'; }
+                    if (title === "STADT" && dimensions === "150x80cm") category = 'großformat';
+
+                    if (!imageThumbnail && !imageFull) { console.warn(`Skipping: ${title} (no images)`); return null; }
+
+                    const postTitle = item["Ursprungs_Post_Titel"];
+                    const postDate = item["Ursprungs_Post_Datum"];
+
+                    return { id: index + 1, title, category, year, dimensions, description, image: imageThumbnail || imageFull, imageFull: imageFull || imageThumbnail, originalUrl, medium: item["Kunstform"] || 'Unbekannt', postTitle, postDate, curatorialText };
+                }).filter(Boolean);
+            }
+
+            // --- News/Events Section Population ---
+             function populateNewsSection(allData) {
+                 if (!newsGrid || !newsPlaceholder) return;
+                 const excludedPostTitles = ["WERKE", "GROßFORMATE AB 100 X 100 CM", "NEWS", "ADMIN", "ADMINISTRATION", "IMPRESSUM"];
+                 const blogPosts = allData.filter(item =>
+                     item["Ursprungs_Post_Titel"] &&
+                     !excludedPostTitles.includes(item["Ursprungs_Post_Titel"].toUpperCase()) &&
+                     item["Ursprungs_Post_Datum"] &&
+                     item["Quell_URL"] &&
+                     item["Quell_URL"].includes('blogspot.com/')
+                 )
+                 .sort((a, b) => {
+                     const tryParseDate = (dateStr) => { if (!dateStr) return 0; const matchDE = dateStr.match(/(\d{1,2})\. (\w+) (\d{4})/); if (matchDE) { const months = { 'januar': 0, 'februar': 1, 'märz': 2, 'april': 3, 'mai': 4, 'juni': 5, 'juli': 6, 'august': 7, 'september': 8, 'oktober': 9, 'november': 10, 'dezember': 11 }; return new Date(matchDE[3], months[matchDE[2].toLowerCase()] || 0 , matchDE[1]).getTime();} return new Date(dateStr).getTime() || 0; };
+                     return tryParseDate(b["Ursprungs_Post_Datum"]) - tryParseDate(a["Ursprungs_Post_Datum"]);
+                 })
+                 .slice(0, 3);
+
+                 newsGrid.innerHTML = '';
+
+                 if (blogPosts.length > 0) {
+                     newsPlaceholder.style.display = 'none';
+                     const fragment = document.createDocumentFragment();
+                     blogPosts.forEach(post => {
+                         const newsItem = document.createElement('div');
+                         newsItem.className = 'news-item';
+                         let displayDate = post["Ursprungs_Post_Datum"] || '';
+                         if (displayDate.includes('um')) displayDate = displayDate.replace(' um ', ', ');
+
+                         const thumbnailHtml = post["Thumpnail des Bildes als link"] ? `<img src="${post["Thumpnail des Bildes als link"]}" alt="" class="news-thumbnail" loading="lazy">` : '';
+                         let postUrl = post["Quell_URL"];
+                         let buttonText = "Zum Blog-Beitrag";
+
+                         // Link specific post title to Werke page
+                         if (post["Ursprungs_Post_Titel"] === "Neue Werke im Neuwerk") {
+                            postUrl = "https://karl-ulinger.blogspot.com/p/werke.html";
+                            buttonText = "Zur Werke Seite";
+                         }
+
+                         const postTitleText = post["Ursprungs_Post_Titel"] || 'Blog-Eintrag';
+                         let postDescription = post["Beschreibung des Bildes"] || 'Kein Auszug verfügbar.';
+                         if (postDescription.length > 150) postDescription = postDescription.substring(0, 150) + '...';
+
+                         newsItem.innerHTML = `
+                             ${thumbnailHtml}
+                             <h3>${postTitleText}</h3>
+                             <p class="news-date">${displayDate}</p>
+                             <p>${postDescription}</p>
+                             ${postUrl ? `<a href="${postUrl}" class="read-more btn btn-secondary btn-small" target="_blank" rel="noopener noreferrer">${buttonText} <i class="fas fa-external-link-alt fa-xs"></i></a>` : ''}
+                         `;
+                         fragment.appendChild(newsItem);
+                     });
+                     newsGrid.appendChild(fragment);
+                 } else {
+                     newsPlaceholder.style.display = 'block';
+                     newsPlaceholder.innerHTML = `
+                        <p>Keine spezifischen Blog-Beiträge zum Hervorheben gefunden.</p>
+                        <a href="https://karl-ulinger.blogspot.com/" class="btn btn-secondary" target="_blank" rel="noopener noreferrer" style="margin-top: 1rem;">
+                            <i class="fab fa-blogger-b"></i> Alle Neuigkeiten im Blog ansehen
+                        </a>`;
+                 }
+             }
+
+
+            // --- Gallery & Modal Functions ---
+            function createGalleryItem(artwork) {
+                const article = document.createElement('article');
+                article.className = 'artwork-card';
+                article.dataset.category = artwork.category;
+                article.dataset.id = artwork.id;
+                article.setAttribute('role', 'listitem');
+                const displayDimensions = artwork.dimensions || 'Unbekannt';
+                const displayYear = artwork.year || 'Undatiert';
+                const displayCategory = artwork.category || 'Andere';
+                let validOriginalUrl = null;
+                try { if (artwork.originalUrl && artwork.originalUrl.includes('blogspot.com/')) { new URL(artwork.originalUrl); validOriginalUrl = artwork.originalUrl; } } catch (_) {}
+
+                article.innerHTML = `
+                    <div class="artwork-image-container">
+                        <img src="${artwork.image}" alt="Kunstwerk: ${artwork.title}" class="artwork-image" loading="lazy" decoding="async">
+                        <div class="artwork-badge">${displayCategory}</div>
+                        <div class="artwork-overlay">
+                            <button class="overlay-btn view-details" title="Details anzeigen" aria-label="Details zu ${artwork.title} anzeigen"> <i class="fas fa-search-plus"></i> </button>
+                            <a href="${artwork.imageFull}" class="overlay-btn" title="Originalbild öffnen" aria-label="Originalbild von ${artwork.title} öffnen" target="_blank" rel="noopener noreferrer"> <i class="fas fa-external-link-alt"></i> </a>
+                        </div>
+                    </div>
+                    <div class="artwork-info">
+                        <div>
+                            <h3 class="artwork-title">${artwork.title}</h3>
+                            <div class="artwork-meta">
+                                <span><i class="far fa-calendar-alt fa-fw"></i> ${displayYear}</span>
+                                <span><i class="fas fa-ruler-combined fa-fw"></i> ${displayDimensions}</span>
+                            </div>
+                            <p class="artwork-description">${artwork.description}</p>
+                        </div>
+                         ${validOriginalUrl ? `
+                         <div class="artwork-link">
+                             <a href="${validOriginalUrl}" class="original-link" target="_blank" rel="noopener noreferrer" title="Ursprungsseite oder Beitrag aufrufen"> <i class="fab fa-blogger-b"></i> Quelle </a>
+                         </div>` : ''}
+                    </div>`;
+                const viewDetailsBtn = article.querySelector('.view-details');
+                if (viewDetailsBtn) viewDetailsBtn.addEventListener('click', () => openArtworkModal(artwork));
+                return article;
+            }
+            function renderGallery(items = artworks) { if (!galleryGrid || !galleryPlaceholder) return; galleryGrid.innerHTML = ''; if (items.length === 0) { galleryPlaceholder.textContent = currentSearchTerm || currentFilter !== 'all' ? 'Keine Werke für Kriterien gefunden.' : 'Keine Werke vorhanden.'; galleryPlaceholder.style.display = 'block'; } else { galleryPlaceholder.style.display = 'none'; const fragment = document.createDocumentFragment(); items.forEach(artwork => fragment.appendChild(createGalleryItem(artwork))); galleryGrid.appendChild(fragment); } galleryGrid.classList.toggle('list-view', isListView); }
+            function applyFiltersAndSearch() { let filteredItems = artworks; if (currentFilter !== 'all') filteredItems = filteredItems.filter(a => a.category === currentFilter); if (currentSearchTerm) { const terms = currentSearchTerm.split(' ').filter(Boolean); filteredItems = filteredItems.filter(a => { const searchable = `${a.title || ''} ${a.description || ''} ${a.curatorialText || ''} ${a.category || ''} ${a.year || ''} ${a.medium || ''} ${a.dimensions || ''}`.toLowerCase(); return terms.every(term => searchable.includes(term)); }); } renderGallery(filteredItems); }
+            function updateFilterButtons() { filterButtons.forEach(b => { const isActive = b.dataset.filter === currentFilter; b.classList.toggle('active', isActive); b.setAttribute('aria-selected', isActive); }); }
+
+            // ******* KORRIGIERTE Modal Funktion *******
+            function openArtworkModal(artwork) {
+                if (!artworkModal || !modalBody || !modalClose) return;
+                modalBody.innerHTML = `<div class="loader-container" style="position: relative; height: 300px; background: transparent;"><div class="loader"></div></div>`;
+                artworkModal.classList.add('open');
+                body.style.overflow = 'hidden';
+
+                setTimeout(() => {
+                     const displayDimensions = artwork.dimensions || 'Nicht angegeben';
+                     const displayYear = artwork.year || 'Undatiert';
+                     const displayCategory = artwork.category ? artwork.category.charAt(0).toUpperCase() + artwork.category.slice(1) : 'Unkategorisiert';
+                     const descriptionId = `modal-desc-${artwork.id}`;
+                     const curatorId = `modal-curator-${artwork.id}`;
+                     const curatorialHtml = artwork.curatorialText ? `<div class="modal-curatorial" id="${curatorId}"><h4>Kuratorischer Text</h4><p>${artwork.curatorialText}</p></div>` : '';
+                     let validOriginalUrl = null;
+                     try { if (artwork.originalUrl && artwork.originalUrl.includes('blogspot.com/')) { new URL(artwork.originalUrl); validOriginalUrl = artwork.originalUrl; } } catch (_) {}
+
+                     modalBody.innerHTML = `
+                         <div class="modal-image-container"> <img src="${artwork.imageFull}" alt="Detailansicht: ${artwork.title}" class="modal-image"> </div>
+                         <div class="modal-info-wrapper">
+                             <div class="modal-main">
+                                 <h2 id="artworkModalTitle">${artwork.title}</h2>
+                                 <div class="modal-meta"> <span>${displayCategory}</span> <span>${displayYear}</span> <span>${displayDimensions}</span> </div>
+                                 <div class="modal-description" id="${descriptionId}"> <p>${artwork.description}</p> </div>
+                                 ${curatorialHtml}
+                                 <div class="modal-actions">
+                                     <a href="${artwork.imageFull}" class="btn" target="_blank" rel="noopener noreferrer"><i class="fas fa-search-plus"></i> Vollbild</a>
+                                     ${validOriginalUrl ? `<a href="${validOriginalUrl}" class="btn btn-secondary" target="_blank" rel="noopener noreferrer"><i class="fab fa-blogger-b"></i> Quelle</a>` : ''}
+                                 </div>
+                             </div>
+                             <div class="modal-sidebar">
+                                 <h3 class="sidebar-title">Werkdetails</h3>
+                                 <div class="info-item"><span class="info-label">Künstler</span><span>Karl Ulinger</span></div>
+                                 <div class="info-item"><span class="info-label">Titel</span><span>${artwork.title}</span></div>
+                                 <div class="info-item"><span class="info-label">Kategorie</span><span>${displayCategory}</span></div>
+                                 <div class="info-item"><span class="info-label">Jahr</span><span>${displayYear}</span></div>
+                                 <div class="info-item"><span class="info-label">Maße</span><span>${displayDimensions}</span></div>
+                                 <div class="info-item"><span class="info-label">Technik</span><span>${artwork.medium || 'Unbekannt'}</span></div>
+                                 ${validOriginalUrl ? `<div class="image-attribution"><p>Quelle: <a href="${validOriginalUrl}" target="_blank" rel="noopener noreferrer">Blogspot</a></p></div>` : ''}
+                             </div>
+                         </div>`;
+                    artworkModal.setAttribute('aria-describedby', artwork.curatorialText ? `${descriptionId} ${curatorId}` : descriptionId);
+                    modalClose.focus();
+                }, 50);
+            }
+             // ******* ENDE KORRIGIERTE Modal Funktion *******
+
+            function closeModal(modalElement) { if (modalElement?.classList.contains('open')) { modalElement.classList.remove('open'); body.style.overflow = ''; } }
+            function toggleGalleryView(viewType) { if (!galleryGrid || !gridViewBtn || !listViewBtn) return; isListView = (viewType === 'list'); galleryGrid.classList.toggle('list-view', isListView); gridViewBtn.classList.toggle('active', !isListView); listViewBtn.classList.toggle('active', isListView); gridViewBtn.setAttribute('aria-pressed', !isListView); listViewBtn.setAttribute('aria-pressed', isListView); localStorage.setItem('galleryView', viewType); }
+
+            // --- Admin Functions ---
+            function openAdminModal() { if (!adminModal) return; adminModal.classList.add('open'); body.style.overflow = 'hidden'; if (adminForm) adminForm.reset(); handleImagePreview(); }
+            function handleImagePreview() { if (!artworkImageInput || !imagePreview || !imagePreviewContainer) return; const previewText = imagePreviewContainer.querySelector('.image-preview-text'); const imageUrl = artworkImageInput.value.trim(); if (imageUrl) { imagePreview.src = imageUrl; imagePreview.style.display = 'block'; if(previewText) previewText.style.display = 'none'; imagePreview.onerror = () => { imagePreview.style.display = 'none'; if(previewText) previewText.style.display = 'flex'; showToast('Bild-URL ungültig.', 'error'); artworkImageInput.focus(); }; } else { imagePreview.src = ''; imagePreview.style.display = 'none'; if(previewText) previewText.style.display = 'flex'; } }
+            function addNewArtwork(e) { e.preventDefault(); if (!adminForm) return; const formData = new FormData(adminForm); const newArtwork = { id: `local-${Date.now()}`, title: formData.get('title')?.trim() || 'Ohne Titel', category: formData.get('category'), year: parseInt(formData.get('year')) || null, dimensions: formData.get('dimensions')?.trim() || '', description: formData.get('description')?.trim() || 'Keine Beschreibung.', image: formData.get('image')?.trim(), imageFull: formData.get('image')?.trim(), originalUrl: formData.get('originalUrl')?.trim() || null, medium: formData.get('category'), curatorialText: null }; if (!newArtwork.image || !newArtwork.category || !newArtwork.year || !newArtwork.title) { showToast('Titel, Kat., Jahr, Bild-URL nötig.', 'error'); return; } artworks.unshift(newArtwork); applyFiltersAndSearch(); closeModal(adminModal); showToast('Werk lokal hinzugefügt!'); }
+
+            // --- Initialization ---
+            function initialize() {
+                if (currentYearSpan) currentYearSpan.textContent = new Date().getFullYear();
+                const savedTheme = localStorage.getItem('theme') || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+                body.dataset.theme = savedTheme;
+                if (themeToggle) { themeToggle.innerHTML = savedTheme === 'dark' ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>'; themeToggle.setAttribute('aria-label', savedTheme === 'dark' ? 'Hellen Modus' : 'Dunklen Modus'); }
+                const savedView = localStorage.getItem('galleryView') || 'grid';
+                toggleGalleryView(savedView);
+
+                artworks = createArtworksFromData(rawArtworkData);
+                applyFiltersAndSearch();
+                populateNewsSection(rawArtworkData);
+
+                hideLoader();
+                setActiveNavLink();
+                setupEventListeners();
+            }
+
+            // --- Setup Event Listeners ---
+            function setupEventListeners() {
+                if (themeToggle) themeToggle.addEventListener('click', toggleTheme);
+                if (mobileMenuBtn) mobileMenuBtn.addEventListener('click', toggleMobileMenu);
+                if (navLinks) navLinks.addEventListener('click', (e) => { if (e.target.tagName === 'A' && navLinks.classList.contains('active')) toggleMobileMenu(); });
+                filterButtons.forEach(button => button.addEventListener('click', () => { currentFilter = button.dataset.filter; updateFilterButtons(); applyFiltersAndSearch(); }));
+                if (searchInput) searchInput.addEventListener('input', debounce(() => { currentSearchTerm = searchInput.value.trim().toLowerCase(); applyFiltersAndSearch(); }, 350));
+                if (gridViewBtn) gridViewBtn.addEventListener('click', () => toggleGalleryView('grid'));
+                if (listViewBtn) listViewBtn.addEventListener('click', () => toggleGalleryView('list'));
+                if (modalClose) modalClose.addEventListener('click', () => closeModal(artworkModal));
+                if (artworkModal) artworkModal.addEventListener('click', (e) => { if (e.target === artworkModal) closeModal(artworkModal); });
+                if (adminButton) adminButton.addEventListener('click', openAdminModal);
+                if (adminModalClose) adminModalClose.addEventListener('click', () => closeModal(adminModal));
+                if (adminModal) adminModal.addEventListener('click', (e) => { if (e.target === adminModal) closeModal(adminModal); });
+                if (artworkImageInput) artworkImageInput.addEventListener('input', handleImagePreview);
+                if (adminForm) adminForm.addEventListener('submit', addNewArtwork);
+                if (contactForm) contactForm.addEventListener('submit', (e) => { e.preventDefault(); const fd = new FormData(contactForm); if (!fd.get('name') || !fd.get('email') || !fd.get('message')) { showToast('Bitte alle Felder ausfüllen.', 'error'); return; } showToast('Danke! Nachricht gesendet (Simulation).', 'success'); contactForm.reset(); });
+                window.addEventListener('scroll', debounce(setActiveNavLink, 150));
+                window.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeModal(artworkModal); closeModal(adminModal); } });
+            }
+
+            // --- Run Initialization ---
+            initialize();
+
+        });
+    </script>
+
+</body>
+</html>
